@@ -28,9 +28,35 @@ public class Main {
             e.printStackTrace();
         }
         if (option == 1) {
-            System.out.println("Wybrano opcję 1.");
+            System.out.println("Tworzymy gościa: ");
+            try {
+                System.out.println("Podaj imię: ");
+                String firstName = input.next();
+                System.out.println("Podaj nazwisko: ");
+                String lastName = input.next();
+                System.out.println("Podaj wiek: ");
+                int age = input.nextInt();
+                Guest createdGuest = new Guest(firstName, lastName, age);
+                String info = String.format("Dodano nowego gościa: %s %s (%d)", createdGuest.firstName, createdGuest.lastName, createdGuest.age);
+                System.out.println(info);
+                } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Podaj wiek przez cyfry");
+            }
         } else if (option == 2) {
-            System.out.println("Wybrano opcję 2.");
+            System.out.println("Tworzymy pokój: ");
+            try {
+                System.out.println("Podaj numer pokoju: ");
+                int roomNr = input.nextInt();
+                System.out.println("Podaj ilość łóżek: ");
+                int beds = input.nextInt();
+                Room createdRoom = new Room(roomNr, beds);
+                String info = String.format("Dodano pokój o numerze: %d, łóżek: %d", createdRoom.roomNr, createdRoom.beds);
+                System.out.println(info);
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("Używaj cyfr!");
+            }
         } else if (option == 3) {
             System.out.println("Wybrano opcję 3.");
         } else {
