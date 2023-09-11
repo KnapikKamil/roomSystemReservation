@@ -63,13 +63,13 @@ public class Main {
         try {
             System.out.println("Numer: ");
             int number = input.nextInt();
-            System.out.println("Ilość łóżek: ");
-            int beds = input.nextInt();
-            Room newRoom = new Room(number, beds);
+            // System.out.println("Ilość łóżek: ");
+            // int beds = input.nextInt();
+            Room newRoom = new Room(number, BedType.DOUBLE);
             System.out.println(newRoom.getInfo());
             return newRoom;
         } catch (Exception e) {
-            System.out.println("Używaj liczb.");
+            System.out.println("Używaj cyfr!");
             return null;
         }
     }

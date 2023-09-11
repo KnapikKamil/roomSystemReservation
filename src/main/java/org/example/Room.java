@@ -2,14 +2,14 @@ package org.example;
 
 public class Room {
    private int number;
-   private int beds;
+   private BedType bedType;
 
-   public Room(int number, int beds){
+   public Room(int number, BedType bedType){
        this.number = number;
-       this.beds = beds;
+       this.bedType = bedType;
    }
    public String getInfo(){
-       return String.format("Dodano nowy pokoj - numer %d (%d)", this.number, this.beds);
+       return String.format("Dodano nowy pokoj - numer %d (%d)", this.number, this.bedType);
    }
 
 }
