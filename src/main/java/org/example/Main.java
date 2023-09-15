@@ -43,6 +43,7 @@ public class Main {
     }
      private static Guest createNewGuest(Scanner input) {
         System.out.println("Tworzymy nowego gościa.");
+        Gender genderType = genderSelection(input);
         try {
             System.out.println("Podaj imię: ");
             String firstName = input.next();
@@ -50,7 +51,7 @@ public class Main {
             String lastName = input.next();
             System.out.println("Podaj wiek: ");
             int age = input.nextInt();
-            Guest newGuest = new Guest(firstName, lastName, age);
+            Guest newGuest = new Guest(genderType, firstName, lastName, age);
             System.out.println(newGuest.getInfo());
             return newGuest;
         } catch (Exception e) {
@@ -58,19 +59,57 @@ public class Main {
             return null;
         }
     }
-     private static Room createNewRoom(Scanner input) {
+    private static Room createNewRoom(Scanner input) {
         System.out.println("Tworzymy nowy pokój.");
         try {
             System.out.println("Numer: ");
             int number = input.nextInt();
-            // System.out.println("Ilość łóżek: ");
-            // int beds = input.nextInt();
-            Room newRoom = new Room(number, BedType.DOUBLE);
+            BedType[] bedTypes = chooseBedType(input);
+            Room newRoom = new Room(number, bedTypes);
             System.out.println(newRoom.getInfo());
             return newRoom;
         } catch (Exception e) {
-            System.out.println("Używaj cyfr!");
+            System.out.println("Wystąpił błąd: " + e.getMessage());
             return null;
         }
+    }
+
+    private static BedType[] chooseBedType(Scanner input) {
+        System.out.println("Ilość łóżek w pokoju?");
+        int bedNumber = input.nextInt();
+        BedType[] bedTypes = new BedType[bedNumber];
+        for(int i=0;i<bedNumber;i++) {
+            System.out.println("Typy łóżek: ");
+            System.out.println("\t1. Pojedyncze");
+            System.out.println("\t2. Podwójne");
+            System.out.println("\t3. Królewskie");
+            BedType bedType = BedType.SINGLE;
+            int bedTypeOption = input.nextInt();
+            if (bedTypeOption == 1) {
+                bedType = BedType.SINGLE;
+            } else if (bedTypeOption == 2) {
+                bedType = BedType.DOUBLE;
+            } else if (bedTypeOption == 3) {
+                bedType = BedType.KING_SIZE;
+            }
+            bedTypes[i] = bedType;
+        }
+        return bedTypes;
+    }
+    private static Gender genderSelection(Scanner input){
+        System.out.println("Wybierz płeć:");
+        System.out.println("\n\t1. Kobieta");
+        System.out.println("\t2. ężczyzna");
+        System.out.println("\t3. Nie binarna");
+        Gender genderType = Gender.LGBTQ;
+        int genderTypeOption = input.nextInt();
+        if (genderTypeOption == 1){
+            genderType = Gender.FAMELE;
+        } else if (genderTypeOption == 2) {
+            genderType = Gender.MALE;
+        } else if (genderTypeOption == 3) {
+            genderType = Gender.LGBTQ;
+        }
+        return genderType;
     }
 }

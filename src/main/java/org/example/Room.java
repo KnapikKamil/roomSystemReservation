@@ -2,14 +2,19 @@ package org.example;
 
 public class Room {
    private int number;
-   private BedType bedType;
+   private BedType[] beds;
 
-   public Room(int number, BedType bedType){
-       this.number = number;
-       this.bedType = bedType;
-   }
+    public Room(int number, BedType[] bedTypes) {
+        this.number = number;
+        this.beds = bedTypes;
+    }
    public String getInfo(){
-       return String.format("Dodano nowy pokoj - numer %d (%d)", this.number, this.bedType);
+        String bedInfo = "Ilość łóżek w pokoju:\n";
+        for (BedType bed : beds){
+            bedInfo ="\t" + bedInfo + bed + "\n";
+        }
+       return String.format("Dodano nowy pokój - numer %d %s", this.number, bedInfo);
+
    }
 
 }
