@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,6 +11,25 @@ public class Main {
         boolean isDeveloperVersion = true;
         showSystemInfo(hotelName, systemVersion, isDeveloperVersion);
         Scanner input = new Scanner(System.in);
+        try {
+            performerAction(input);
+        }catch(WrongOptionExeption e){
+            System.out.println("Wystąpił niespodziewany błąd");
+            System.out.println("Kod błędu: " + e.getCode());
+            System.out.println("Komunikat błędu: " + e.getMessage());
+        }catch (OnlyNumberExeption e){
+            System.out.println("Wystąpił niespodziewany błąd");
+            System.out.println("Kod błędu: " + e.getCode());
+            System.out.println("Komunikat błędu: " + e.getMessage());
+        }catch (Exception e) {
+            System.out.println("Wystąpił niespodziewany błąd");
+            System.out.println("Nieznany kod błędu");
+            System.out.println("Komunikat błędu: " + e.getMessage());
+        }
+
+    }
+
+    private static void performerAction(Scanner input) {
         int option = getActionFromUser(input);
         if (option == 1) {
             Guest newGuest = createNewGuest(input);
@@ -18,10 +38,11 @@ public class Main {
         } else if (option == 3) {
             System.out.println("Wybrano opcję 3.");
         } else {
-            System.out.println("Wybrano niepoprawną akcję.");
+            throw new WrongOptionExeption("Wrong option in main menu");
         }
     }
-   private static void showSystemInfo(String hotelName, int systemVersion, boolean isDeveloperVersion) {
+
+    private static void showSystemInfo(String hotelName, int systemVersion, boolean isDeveloperVersion) {
         System.out.print("Witam w systemie rezerwacji dla hotelu " + hotelName);
         System.out.println("Aktualna wersja systemu: " + systemVersion);
         System.out.println("Wersja developerska: " + isDeveloperVersion);
@@ -35,9 +56,8 @@ public class Main {
         int option = 0;
         try {
             option = in.nextInt();
-        } catch (Exception e) {
-            System.out.println("Niepoprawne dane wejsciowe, wprowadz liczbę.");
-            e.printStackTrace();
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberExeption("Wrong use only numbers in main menu");
         }
         return option;
     }
@@ -54,9 +74,8 @@ public class Main {
             Guest newGuest = new Guest(genderType, firstName, lastName, age);
             System.out.println(newGuest.getInfo());
             return newGuest;
-        } catch (Exception e) {
-            System.out.println("Zły wiek, używaj liczb.");
-            return null;
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberExeption("Use only numbers when chosing gender");
         }
     }
     private static Room createNewRoom(Scanner input) {
@@ -68,9 +87,8 @@ public class Main {
             Room newRoom = new Room(number, bedTypes);
             System.out.println(newRoom.getInfo());
             return newRoom;
-        } catch (Exception e) {
-            System.out.println("Wystąpił błąd: " + e.getMessage());
-            return null;
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberExeption("se numbers when creating new room");
         }
     }
 
@@ -91,6 +109,8 @@ public class Main {
                 bedType = BedType.DOUBLE;
             } else if (bedTypeOption == 3) {
                 bedType = BedType.KING_SIZE;
+            }else {
+                throw new WrongOptionExeption("Wrong option when selecting bed type");
             }
             bedTypes[i] = bedType;
         }
@@ -109,6 +129,8 @@ public class Main {
             genderType = Gender.MALE;
         } else if (genderTypeOption == 3) {
             genderType = Gender.LGBTQ;
+        }else{
+            throw new WrongOptionExeption("Wrong option in gender selection");
         }
         return genderType;
     }
