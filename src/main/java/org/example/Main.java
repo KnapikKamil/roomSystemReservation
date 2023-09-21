@@ -13,15 +13,11 @@ public class Main {
         Scanner input = new Scanner(System.in);
         try {
             performerAction(input);
-        }catch(WrongOptionExeption e){
+        }catch (WrongOptionException | OnlyNumberException e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Kod błędu: " + e.getCode());
             System.out.println("Komunikat błędu: " + e.getMessage());
-        }catch (OnlyNumberExeption e){
-            System.out.println("Wystąpił niespodziewany błąd");
-            System.out.println("Kod błędu: " + e.getCode());
-            System.out.println("Komunikat błędu: " + e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Nieznany kod błędu");
             System.out.println("Komunikat błędu: " + e.getMessage());
@@ -36,9 +32,9 @@ public class Main {
         } else if (option == 2) {
             Room newRoom = createNewRoom(input);
         } else if (option == 3) {
-            System.out.println("Wybrano opcję 3.");
+            System.out.println("Wybrano opcje 3.");
         } else {
-            throw new WrongOptionExeption("Wrong option in main menu");
+            throw new WrongOptionException("Wrong option in main menu");
         }
     }
 
@@ -57,7 +53,7 @@ public class Main {
         try {
             option = in.nextInt();
         } catch (InputMismatchException e) {
-            throw new OnlyNumberExeption("Wrong use only numbers in main menu");
+            throw new OnlyNumberException("Wrong use only numbers in main menu");
         }
         return option;
     }
@@ -75,7 +71,7 @@ public class Main {
             System.out.println(newGuest.getInfo());
             return newGuest;
         } catch (InputMismatchException e) {
-            throw new OnlyNumberExeption("Use only numbers when chosing gender");
+            throw new OnlyNumberException("Use only numbers when chosing gender");
         }
     }
     private static Room createNewRoom(Scanner input) {
@@ -88,7 +84,7 @@ public class Main {
             System.out.println(newRoom.getInfo());
             return newRoom;
         } catch (InputMismatchException e) {
-            throw new OnlyNumberExeption("se numbers when creating new room");
+            throw new OnlyNumberException("Use numbers when creating new room");
         }
     }
 
@@ -110,7 +106,7 @@ public class Main {
             } else if (bedTypeOption == 3) {
                 bedType = BedType.KING_SIZE;
             }else {
-                throw new WrongOptionExeption("Wrong option when selecting bed type");
+                throw new WrongOptionException("Wrong option when selecting bed type");
             }
             bedTypes[i] = bedType;
         }
@@ -130,7 +126,7 @@ public class Main {
         } else if (genderTypeOption == 3) {
             genderType = Gender.LGBTQ;
         }else{
-            throw new WrongOptionExeption("Wrong option in gender selection");
+            throw new WrongOptionException("Wrong option in gender selection");
         }
         return genderType;
     }
