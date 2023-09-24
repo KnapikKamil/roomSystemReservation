@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+
+    private static TextUI textUI = new TextUI();
     public static void main(String[] args) {
         String hotelName = "Salt ";
         int systemVersion = 1;
@@ -13,7 +15,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         try {
             performerAction(input);
-        }catch (WrongOptionException | OnlyNumberException e) {
+        } catch (WrongOptionException | OnlyNumberException e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Kod błędu: " + e.getCode());
             System.out.println("Komunikat błędu: " + e.getMessage());
@@ -27,8 +29,9 @@ public class Main {
 
     private static void performerAction(Scanner input) {
         int option = getActionFromUser(input);
+
         if (option == 1) {
-            Guest newGuest = createNewGuest(input);
+            textUI.readNewGuestData(input);
         } else if (option == 2) {
             Room newRoom = createNewRoom(input);
         } else if (option == 3) {
@@ -44,6 +47,7 @@ public class Main {
         System.out.println("Wersja developerska: " + isDeveloperVersion);
         System.out.println("\n=========================\n");
     }
+
     private static int getActionFromUser(Scanner in) {
         System.out.println("1. Dodaj nowego gościa.");
         System.out.println("2. Dodaj nowy pokój.");
@@ -57,23 +61,11 @@ public class Main {
         }
         return option;
     }
-     private static Guest createNewGuest(Scanner input) {
-        System.out.println("Tworzymy nowego gościa.");
-        Gender genderType = genderSelection(input);
-        try {
-            System.out.println("Podaj imię: ");
-            String firstName = input.next();
-            System.out.println("Podaj nazwisko: ");
-            String lastName = input.next();
-            System.out.println("Podaj wiek: ");
-            int age = input.nextInt();
-            Guest newGuest = new Guest(genderType, firstName, lastName, age);
-            System.out.println(newGuest.getInfo());
-            return newGuest;
-        } catch (InputMismatchException e) {
-            throw new OnlyNumberException("Use only numbers when chosing gender");
-        }
-    }
+
+
+
+
+
     private static Room createNewRoom(Scanner input) {
         System.out.println("Tworzymy nowy pokój.");
         try {
@@ -92,7 +84,7 @@ public class Main {
         System.out.println("Ilość łóżek w pokoju?");
         int bedNumber = input.nextInt();
         BedType[] bedTypes = new BedType[bedNumber];
-        for(int i=0;i<bedNumber;i++) {
+        for (int i = 0; i < bedNumber; i++) {
             System.out.println("Typy łóżek: ");
             System.out.println("\t1. Pojedyncze");
             System.out.println("\t2. Podwójne");
@@ -105,29 +97,12 @@ public class Main {
                 bedType = BedType.DOUBLE;
             } else if (bedTypeOption == 3) {
                 bedType = BedType.KING_SIZE;
-            }else {
+            } else {
                 throw new WrongOptionException("Wrong option when selecting bed type");
             }
             bedTypes[i] = bedType;
         }
         return bedTypes;
     }
-    private static Gender genderSelection(Scanner input){
-        System.out.println("Wybierz płeć:");
-        System.out.println("\n\t1. Kobieta");
-        System.out.println("\t2. ężczyzna");
-        System.out.println("\t3. Nie binarna");
-        Gender genderType = Gender.LGBTQ;
-        int genderTypeOption = input.nextInt();
-        if (genderTypeOption == 1){
-            genderType = Gender.FAMELE;
-        } else if (genderTypeOption == 2) {
-            genderType = Gender.MALE;
-        } else if (genderTypeOption == 3) {
-            genderType = Gender.LGBTQ;
-        }else{
-            throw new WrongOptionException("Wrong option in gender selection");
-        }
-        return genderType;
-    }
+
 }
