@@ -1,4 +1,4 @@
-package org.example;
+package org.exampleHotel.domain.guest;
 
 public enum Gender {
     FEMALE,

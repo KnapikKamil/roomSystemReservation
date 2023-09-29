@@ -1,4 +1,4 @@
-package org.example;
+package org.exampleHotel.domain.room;
 
 public enum BedType {
     SINGLE,
