@@ -24,4 +24,10 @@ public class GuestService {
 
         return this.repository.getAll();
     }
+    public void saveAll(){
+        this.repository.saveAll();
+    }
+  public void readAll() {
+      this.repository.readAll();
+  }
 }

@@ -31,4 +31,10 @@ public class RoomService {
      public List<Room> getAllRooms(){
         return  repository.getAll();
     }
+    public void saveAll() {
+        this.repository.saveAll();
+    }
+    public void readAll(){
+        this.repository.readAll();
+    }
 }

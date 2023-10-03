@@ -17,4 +17,13 @@ public class Room {
 
    }
 
+    String toCSV() {
+        String[] bedsAsString = new String[this.beds.length];
+        for (int i = 0; i < this.beds.length; i++) {
+            bedsAsString[i] = this.beds[i].toString();
+        }
+        String bedTypes = String.join("#", bedsAsString);
+        return String.format("%d,%s%s", this.number, bedTypes, System.getProperty("line.separator"));
+    }
+
 }

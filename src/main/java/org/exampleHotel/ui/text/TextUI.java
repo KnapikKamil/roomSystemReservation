@@ -75,6 +75,9 @@ public class TextUI {
     }
 
     public void showMainMenu() {
+        System.out.println("Trwa ładowanie danych..");
+        this.guestService.readAll();
+        this.roomService.readAll();
         Scanner input = new Scanner(System.in);
         try {
             performerAction(input);
@@ -97,7 +100,10 @@ public class TextUI {
             option = getActionFromUser(input);
 
             if (option == 0) {
-                System.out.println("Wychodzę z aplikacji");
+                System.out.println("Wychodzę z aplikacji, zapisuje dane.");
+                this.guestService.saveAll();
+                this.roomService.saveAll();
+
             }else if (option == 1) {
                 readNewGuestData(input);
             } else if (option == 2) {

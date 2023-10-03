@@ -9,7 +9,8 @@ public class Guest {
    private final int age;
     private final Gender gender;
 
-   Guest(String firstName, String lastName, int age, Gender gender){
+
+    Guest(String firstName, String lastName, int age, Gender gender){
        this.firstName = firstName;
        this.lastName = lastName;
        this.age = age;
@@ -17,5 +18,8 @@ public class Guest {
    }
     public String getInfo(){
         return   String.format(" %s %s (%d) %s ",this.firstName, this.lastName, this.age, this.gender);
+    }
+    String toCSV(){
+       return String.format("%s,%s,%d,%s%s",this.firstName, this.lastName, this.age, this.gender, System.getProperty("line.separator"));
     }
 }
