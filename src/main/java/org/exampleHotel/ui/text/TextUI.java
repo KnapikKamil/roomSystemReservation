@@ -6,6 +6,7 @@ import org.exampleHotel.domain.guest.Guest;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.room.Room;
 import org.exampleHotel.domain.room.RoomService;
+import org.exampleHotel.util.Properties;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -67,10 +68,10 @@ public class TextUI {
         return bedTypes;
     }
 
-    public void showSystemInfo(String hotelName, int systemVersion, boolean isDeveloperVersion) {
-        System.out.print("Witam w systemie rezerwacji dla hotelu " + hotelName);
-        System.out.println("Aktualna wersja systemu: " + systemVersion);
-        System.out.println("Wersja developerska: " + isDeveloperVersion);
+    public void showSystemInfo() {
+        System.out.print("Witam w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
+        System.out.println("Aktualna wersja systemu: " + Properties.SYSTEM_VERSION);
+        System.out.println("Wersja developerska: " + Properties.IS_DEVELOPER_VERSION);
         System.out.println("\n=========================\n");
     }
 

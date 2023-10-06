@@ -1,10 +1,8 @@
 package org.exampleHotel.domain.guest;
 
 
-import org.exampleHotel.domain.guest.Gender;
-import org.exampleHotel.domain.guest.Guest;
+import org.exampleHotel.util.Properties;
 
-import java.awt.image.ImagingOpException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -29,17 +27,13 @@ public class GuestRepository {
 
     void saveAll() {
         String name = "guests.csv";
-        Path file = Paths.get(System.getProperty("user.home"), "reservation_system", name);
+        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
         StringBuilder stringBuilder = new StringBuilder("");
         for (Guest guest : guests) {
             stringBuilder.append(guest.toCSV());
         }
 
         try {
-            Path reservation_system_dir = Paths.get(System.getProperty("user.home"), "reservation_system");
-            if (!Files.isDirectory(reservation_system_dir)) {
-                Files.createDirectory(reservation_system_dir);
-            }
             Files.writeString(file, stringBuilder.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,10 +42,7 @@ public class GuestRepository {
 
     void readAll() {
         String name = "guests.csv";
-        Path file = Paths.get(
-                System.getProperty("user.home"),
-                "reservation_system",
-                name);
+        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
         try {
             String data = Files.readString(file, StandardCharsets.UTF_8);
             String[] guestsAsString = data.split(System.getProperty("line.separator"));
