@@ -1,6 +1,7 @@
 package org.exampleHotel.ui.text;
 
 import org.exampleHotel.exceptions.OnlyNumberException;
+import org.exampleHotel.exceptions.PersistenceToFileException;
 import org.exampleHotel.exceptions.WrongOptionException;
 import org.exampleHotel.domain.guest.Guest;
 import org.exampleHotel.domain.guest.GuestService;
@@ -82,7 +83,7 @@ public class TextUI {
         Scanner input = new Scanner(System.in);
         try {
             performerAction(input);
-        } catch (WrongOptionException | OnlyNumberException e) {
+        } catch (WrongOptionException | OnlyNumberException | PersistenceToFileException e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Kod błędu: " + e.getCode());
             System.out.println("Komunikat błędu: " + e.getMessage());

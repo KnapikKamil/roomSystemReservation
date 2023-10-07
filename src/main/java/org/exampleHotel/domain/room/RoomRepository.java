@@ -1,5 +1,6 @@
 package org.exampleHotel.domain.room;
 
+import org.exampleHotel.exceptions.PersistenceToFileException;
 import org.exampleHotel.util.Properties;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class RoomRepository {
         try {
             Files.writeString(file, stringBuilder.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new PersistenceToFileException(file.toString(), "write", "room data");
         }
     }
     void readAll(){
@@ -55,8 +56,7 @@ public class RoomRepository {
                 createNewRoom(number,bedTypes);
             }
         } catch (IOException e) {
-            System.out.println("Nie udało się odczytać pliku z danymi");
-            e.printStackTrace();
+            throw new PersistenceToFileException(file.toString(), "read", "room data");
         }
     }
 }
