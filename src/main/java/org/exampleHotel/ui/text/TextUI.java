@@ -1,5 +1,6 @@
 package org.exampleHotel.ui.text;
 
+import org.exampleHotel.domain.guest.Gender;
 import org.exampleHotel.exceptions.OnlyNumberException;
 import org.exampleHotel.exceptions.PersistenceToFileException;
 import org.exampleHotel.exceptions.WrongOptionException;
@@ -114,10 +115,49 @@ public class TextUI {
                 showAllGuests();
             } else if (option == 4) {
                 showAllRooms();
-            }else {
+            } else if (option == 5) {
+                removeGuest(input);
+            } else if (option == 6) {
+                editGuest(input);
+            } else{
                 throw new WrongOptionException("Wrong option in main menu");
             }
         }
+    }
+
+    private void editGuest(Scanner input) {
+        System.out.println("Podaj id gościa do edycji");
+        try {
+            int id = input.nextInt();
+
+
+                System.out.println("Podaj imię: ");
+                String firstName = input.next();
+                System.out.println("Podaj nazwisko: ");
+                String lastName = input.next();
+                System.out.println("Podaj wiek: ");
+                int age = input.nextInt();
+                System.out.println("Wybierz płeć:");
+                System.out.println("\n\t1. Kobieta 2. Mężczyzna 3. Nie binarna");
+                int genderOption = input.nextInt();
+                if (genderOption != 1 && genderOption != 2 && genderOption != 3) {
+                    throw new WrongOptionException("Wrong option in gender selection");
+                }
+                guestService.editGuest(id, firstName, lastName, age, genderOption);
+            } catch (InputMismatchException e) {
+                throw new OnlyNumberException("Use numbers when edting guest");
+            }
+        }
+
+
+    private void removeGuest(Scanner input) {
+        System.out.println("Podaj id gościa do usunięcia");
+            try {
+              int id = input.nextInt();
+              this.guestService.removeGuest(id);
+            }catch (InputMismatchException e){
+                throw new OnlyNumberException("Use numbers when insert ID");
+            }
     }
 
     private void showAllRooms() {
@@ -141,6 +181,8 @@ for (Room room : rooms){
         System.out.println("2 - Dodaj nowy pokój.");
         System.out.println("3 - Wypisz wszystkich gości.");
         System.out.println("4 - Wypisz wszystkie pokoje. ");
+        System.out.println("5 - Usuń gościa.");
+        System.out.println("Edytuj dane gościa.");
         System.out.println("Wybierz opcję: ");
         int option;
         try {

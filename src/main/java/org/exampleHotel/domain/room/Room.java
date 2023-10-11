@@ -1,10 +1,17 @@
 package org.exampleHotel.domain.room;
 
 public class Room {
+
+    private final int id;
    private final int number;
    private final BedType[] beds;
 
-    Room(int number, BedType[] bedTypes) {
+    public int getId() {
+        return id;
+    }
+
+    Room(int id, int number, BedType[] bedTypes) {
+        this.id = id;
         this.number = number;
         this.beds = bedTypes;
     }
@@ -13,7 +20,7 @@ public class Room {
         for (BedType bed : beds){
             bedInfo.append("\t").append(bed).append("\n");
         }
-       return String.format("numer: %d %s", this.number, bedInfo.toString());
+       return String.format("%d numer: %d %s",this.id, this.number, bedInfo.toString());
 
    }
 
