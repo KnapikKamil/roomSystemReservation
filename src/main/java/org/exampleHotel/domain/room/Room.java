@@ -16,12 +16,11 @@ public class Room {
         this.beds = bedTypes;
     }
    public String getInfo(){
-        StringBuilder bedInfo = new StringBuilder("Ilość łóżek w pokoju:\n");
-        for (BedType bed : beds){
-            bedInfo.append("\t").append(bed).append("\n");
-        }
-       return String.format("%d numer: %d %s",this.id, this.number, bedInfo.toString());
-
+       StringBuilder bedInfo = new StringBuilder("Rodzaje łóżek w pokoju:\n");
+       for (BedType bed : beds) {
+           bedInfo.append("\t").append(bed).append("\n");
+       }
+       return String.format("%d Numer: %d %s",this.id, this.number, bedInfo.toString());
    }
 
     String toCSV() {
@@ -30,7 +29,8 @@ public class Room {
             bedsAsString[i] = this.beds[i].toString();
         }
         String bedTypes = String.join("#", bedsAsString);
-        return String.format("%d,%s%s", this.number, bedTypes, System.getProperty("line.separator"));
+        return String.format("%d,%d,%s%s",this.id, this.number, bedTypes, System.getProperty("line.separator"));
     }
+
 
 }

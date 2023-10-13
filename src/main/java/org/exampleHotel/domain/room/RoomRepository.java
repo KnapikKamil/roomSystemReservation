@@ -9,7 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RoomRepository {
     private final List<Room> rooms = new ArrayList<>();
@@ -22,7 +24,7 @@ public class RoomRepository {
         return newRoom;
     }
 
-    Room addNewRoomFromFile(int id, int number, BedType[] bedTypes) {
+    Room addExistingRoom(int id, int number, BedType[] bedTypes) {
 
 
         Room newRoom = new Room(id, number, bedTypes);
@@ -34,31 +36,37 @@ public class RoomRepository {
         return this.rooms;
     }
 
-    void saveAll() {
+    public void saveAll() {
         String name = "rooms.csv";
+
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
-        StringBuilder stringBuilder = new StringBuilder("");
-        for (Room room : rooms) {
-            stringBuilder.append(room.toCSV());
+
+        StringBuilder sb = new StringBuilder("");
+
+        for (Room room : this.rooms) {
+            sb.append(room.toCSV());
         }
+
         try {
-            Files.writeString(file, stringBuilder.toString(), StandardCharsets.UTF_8);
+            Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new PersistenceToFileException(file.toString(), "write", "room data");
+            throw new PersistenceToFileException(file.toString(), "save", "room data");
         }
     }
 
-    void readAll() {
+    public void readAll() {
         String name = "rooms.csv";
+
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
 
-        if (!Files.exists(file)){
+        if(!Files.exists(file)) {
             return;
         }
 
         try {
             String data = Files.readString(file, StandardCharsets.UTF_8);
             String[] roomsAsString = data.split(System.getProperty("line.separator"));
+
             for (String guestAsString : roomsAsString) {
                 String[] roomData = guestAsString.split(",");
                 int id = Integer.parseInt(roomData[0]);
@@ -69,12 +77,17 @@ public class RoomRepository {
                 for (int i = 0; i < bedTypes.length; i++) {
                     bedTypes[i] = BedType.valueOf(bedsTypesAsString[i]);
                 }
-                addNewRoomFromFile(id, number, bedTypes);
+                addExistingRoom(id, number, bedTypes);
             }
+
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "read", "room data");
         }
+
     }
+
+
+
 
     private int findNewId() {
         int max = 0;
@@ -85,4 +98,24 @@ public class RoomRepository {
         }
         return max + 1;
     }
+
+    public void remove(int id) {
+        int guestToBeRemovedIndex = -1;
+        for (int i = 0; i < rooms.size(); i++) {
+            if (this.rooms.get(i).getId() == id) {
+                guestToBeRemovedIndex = i;
+                break;
+            }
+        }
+        if (guestToBeRemovedIndex > -1) {
+            this.rooms.remove(guestToBeRemovedIndex);
+        }
+    }
+
+    public void edit(int id, int number, BedType[] bedTypes) {
+        this.remove(id);
+        this.addExistingRoom(id, number, bedTypes);
+    }
+
+
 }
