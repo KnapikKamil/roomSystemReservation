@@ -21,7 +21,8 @@ public class GuestRepository {
         guests.add(newGuest);
         return newGuest;
     }
-    Guest addGuestFromFile(int id, String firstName, String lastName, int age, Gender gender) {
+
+    Guest addExistingGuest(int id, String firstName, String lastName, int age, Gender gender) {
         Guest newGuest = new Guest(id, firstName, lastName, age, gender);
         guests.add(newGuest);
         return newGuest;
@@ -50,50 +51,63 @@ public class GuestRepository {
         String name = "guests.csv";
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
 
-        if (!Files.exists(file)){
+        if (!Files.exists(file)) {
             return;
         }
 
         try {
             String data = Files.readString(file, StandardCharsets.UTF_8);
             String[] guestsAsString = data.split(System.getProperty("line.separator"));
-            for(String guestAsString : guestsAsString) {
+            for (String guestAsString : guestsAsString) {
                 String[] guestData = guestAsString.split(",");
+                if (guestData[0] == null || guestData[0].trim().isEmpty()){
+                    continue;
+                }
                 int id = Integer.parseInt(guestData[0]);
                 int age = Integer.parseInt(guestData[3]);
                 Gender gender = Gender.valueOf(guestData[4]);
-                addGuestFromFile(id, guestData[1], guestData[2], age, gender);
+                addExistingGuest(id, guestData[1], guestData[2], age, gender);
             }
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "read", "guest data");
         }
     }
-    private int findNewId(){
+
+    private int findNewId() {
         int max = 0;
-        for (Guest guest : this.guests){
-            if (guest.getId()>max){
+        for (Guest guest : this.guests) {
+            if (guest.getId() > max) {
                 max = guest.getId();
             }
         }
-        return max+1;
+        return max + 1;
     }
 
     public void remove(int id) {
         int guestToBeRemovedIndex = -1;
-        for (int i = 0; i < guests.size(); i++){
-            if (this.guests.get(id).getId() == id){
+        for (int i = 0; i < guests.size(); i++) {
+            if (this.guests.get(i).getId() == id) {
                 guestToBeRemovedIndex = i;
                 break;
             }
-            if (guestToBeRemovedIndex> -1){
-                this.guests.remove(guestToBeRemovedIndex);
-
-            }
+        }
+        if (guestToBeRemovedIndex > -1) {
+            this.guests.remove(guestToBeRemovedIndex);
         }
     }
 
     public void edit(int id, String firstName, String lastName, int age, Gender gender) {
         this.remove(id);
-        this.addGuestFromFile(id, firstName, lastName, age,gender);
+        this.addExistingGuest(id, firstName, lastName, age, gender);
     }
+
+    public Guest findById(int id) {
+        for (Guest guest : this.guests) {
+            if (guest.getId() == id) {
+                return guest;
+            }
+        }
+        return null;
+    }
+
 }

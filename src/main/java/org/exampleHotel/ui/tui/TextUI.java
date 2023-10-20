@@ -1,4 +1,4 @@
-package org.exampleHotel.ui.text;
+package org.exampleHotel.ui.tui;
 
 import org.exampleHotel.domain.reservation.Reservation;
 import org.exampleHotel.domain.reservation.ReservationService;
@@ -13,6 +13,7 @@ import org.exampleHotel.util.Properties;
 
 import java.awt.image.ImagingOpException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -113,7 +114,7 @@ public class TextUI {
                 this.roomService.saveAll();
                 this.reservationService.saveAll();
 
-            }else if (option == 1) {
+            } else if (option == 1) {
                 readNewGuestData(input);
             } else if (option == 2) {
                 readNewRoomData(input);
@@ -137,7 +138,7 @@ public class TextUI {
                 removeReservation(input);
             } else if (option == 12) {
                 editReservation(input);
-            } else{
+            } else {
                 throw new WrongOptionException("Wrong option in main menu");
             }
         }
@@ -146,28 +147,34 @@ public class TextUI {
     private void editReservation(Scanner input) {
         System.out.println("Podaj id rezerwacji do edycji: ");
         int id = input.nextInt();
+        System.out.println("Od kiedy? Format: DD.MM,YYYY:");
+        String fromAsString = input.next();
+        LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_TIME_FORMATTER);
+        System.out.println("Do kiedy? Format: DD.MM.YYYY:");
+        String tooASString = input.next();
+        LocalDate to = LocalDate.parse(tooASString, Properties.DATE_TIME_FORMATTER);
+        System.out.println("Podaj ID pokoju:");
+        int roomId = input.nextInt();
+        System.out.println("Podaj ID gościa:");
+        int guestId = input.nextInt();
+        try {
+            Reservation res = this.reservationService.edit(id ,from, to, roomId, guestId);
+            if (res != null) {
+                System.out.println("Zapis rezerwacji się powiódł.");
+            }
 
-
-
-            System.out.println("Od kiedy? Format: DD.MM,YYYY:");
-            String fromAsString = input.next();
-            LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_TIME_FORMATTER);
-            System.out.println("Do kiedy? Format: DD.MM.YYYY:");
-            String tooASString = input.next();
-            LocalDate to = LocalDate.parse(tooASString, Properties.DATE_TIME_FORMATTER);
-            System.out.println("Podaj ID pokoju:");
-            int roomId = input.nextInt();
-            System.out.println("Podaj ID gościa:");
-            int guestId = input.nextInt();
-            reservationService.edit(id, from, to, roomId, guestId);
+        }catch (IllegalArgumentException e){
+            System.out.println("!!! Data zakończenia rezerwacji nie może być wcześiejsza niż data rozpoczęcia.");
         }
+
+    }
 
     private void removeReservation(Scanner input) {
         System.out.println("Podaj id rezerwacji do usunięcia: ");
         try {
             int id = input.nextInt();
             this.reservationService.remove(id);
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use numbers when insert ID");
         }
     }
@@ -191,12 +198,16 @@ public class TextUI {
         int roomId = input.nextInt();
         System.out.println("Podaj ID gościa:");
         int guestId = input.nextInt();
-        Reservation res = this.reservationService.createNewReservation(from, to, roomId, guestId);
-        if (res != null){
-            System.out.println("Zapis rezerwacji się powiódł.");
-        }else{
-            System.out.println("Nie udało się utworzyć rezerwacji.");
+        try {
+            Reservation res = this.reservationService.createNewReservation(from, to, roomId, guestId);
+            if (res != null) {
+                System.out.println("Zapis rezerwacji się powiódł.");
+            }
+
+        }catch (IllegalArgumentException e){
+            System.out.println("!!! Data zakończenia rezerwacji nie może być wcześiejsza niż data rozpoczęcia.");
         }
+
     }
 
     private void editRoom(Scanner input) {
@@ -216,8 +227,8 @@ public class TextUI {
         System.out.println("Podaj id pokoju do usunięcia: ");
         try {
             int id = input.nextInt();
-           this.roomService.remove(id);
-        }catch (InputMismatchException e){
+            this.roomService.remove(id);
+        } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use numbers when insert ID");
         }
 
@@ -229,45 +240,45 @@ public class TextUI {
             int id = input.nextInt();
 
 
-                System.out.println("Podaj imię: ");
-                String firstName = input.next();
-                System.out.println("Podaj nazwisko: ");
-                String lastName = input.next();
-                System.out.println("Podaj wiek: ");
-                int age = input.nextInt();
-                System.out.println("Wybierz płeć:");
-                System.out.println("\n\t1. Kobieta 2. Mężczyzna 3. Nie binarna");
-                int genderOption = input.nextInt();
-                if (genderOption != 1 && genderOption != 2 && genderOption != 3) {
-                    throw new WrongOptionException("Wrong option in gender selection");
-                }
-                guestService.edit(id, firstName, lastName, age, genderOption);
-            } catch (InputMismatchException e) {
-                throw new OnlyNumberException("Use numbers when edting guest");
+            System.out.println("Podaj imię: ");
+            String firstName = input.next();
+            System.out.println("Podaj nazwisko: ");
+            String lastName = input.next();
+            System.out.println("Podaj wiek: ");
+            int age = input.nextInt();
+            System.out.println("Wybierz płeć:");
+            System.out.println("\n\t1. Kobieta 2. Mężczyzna 3. Nie binarna");
+            int genderOption = input.nextInt();
+            if (genderOption != 1 && genderOption != 2 && genderOption != 3) {
+                throw new WrongOptionException("Wrong option in gender selection");
             }
+            guestService.edit(id, firstName, lastName, age, genderOption);
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when edting guest");
         }
+    }
 
 
     private void removeGuest(Scanner input) {
         System.out.println("Podaj id gościa do usunięcia: ");
-            try {
-              int id = input.nextInt();
-              this.guestService.remove(id);
-            }catch (InputMismatchException e){
-                throw new OnlyNumberException("Use numbers when insert ID");
-            }
+        try {
+            int id = input.nextInt();
+            this.guestService.remove(id);
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when insert ID");
+        }
     }
 
     private void showAllRooms() {
-List<Room>rooms = this.roomService.getAllRooms();
-for (Room room : rooms){
-    System.out.println(room.getInfo());
-}
+        List<Room> rooms = this.roomService.getAllRooms();
+        for (Room room : rooms) {
+            System.out.println(room.getInfo());
+        }
     }
 
     private void showAllGuests() {
-        List<Guest>guests = this.guestService.getAllGuests();
-        for (Guest guest : guests){
+        List<Guest> guests = this.guestService.getAllGuests();
+        for (Guest guest : guests) {
             System.out.println(guest.getInfo());
         }
     }
@@ -284,7 +295,7 @@ for (Room room : rooms){
         System.out.println("7 - Usuń pokój.");
         System.out.println("8 - Edytuj pokój. ");
         System.out.println("9 - stwórz rezerwację.");
-        System.out.println("10 - Wypisz wszystkie rezerwacje");
+        System.out.println("10 - Wypisz wszystkie rezerwacje.");
         System.out.println("11 - Usuń rezerwację.");
         System.out.println("12 - Edytuj rezerwację.");
         System.out.println("Wybierz opcję: ");

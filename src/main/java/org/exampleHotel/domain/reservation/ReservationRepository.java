@@ -30,7 +30,6 @@ public class ReservationRepository {
         return res;
     }
 
-
     private int findNewId() {
         int max = 0;
         for (Reservation reservation : this.reservations) {
@@ -70,6 +69,9 @@ public class ReservationRepository {
             String[] reservationsAsString = data.split(System.getProperty("line.separator"));
             for (String reservationAsString : reservationsAsString) {
                 String[] reservationData = reservationAsString.split(",");
+                if (reservationData[0] == null || reservationData[0].trim().isEmpty()) {
+                    continue;
+                }
                 int id = Integer.parseInt(reservationData[0]);
                 int roomId = Integer.parseInt(reservationData[1]);
                 int guestId = Integer.parseInt(reservationData[2]);
@@ -103,15 +105,12 @@ public class ReservationRepository {
     }
 
 
-    public void edit(int id, LocalDate from, LocalDate to, int roomId, int guestId) {
+    public Reservation edit(int id, Room room, Guest guest, LocalDateTime fromWithTime, LocalDateTime toWithTime) {
         this.remove(id);
-        Room room = this.roomService.getRoomById(roomId);
-        Guest guest = this.guestService.getGuestById(guestId);
-
-        LocalDateTime fromDateTime = from.atTime(Properties.HOTEL_NIGHT_START_HOUR, Properties.HOTEL_NIGHT_START_MINUTE);
-        LocalDateTime toDateTime = to.atTime(Properties.HOTEL_NIGHT_END_HOUR, Properties.HOTEL_NIGHT_END_MINUTE);
-
-        this.addExistingReservation(id, room, guest, fromDateTime, toDateTime);
+        return  this.addExistingReservation(id, room, guest, fromWithTime, toWithTime);
     }
+
+
 }
+
 

@@ -1,12 +1,14 @@
 package org.exampleHotel.domain.room;
 
+import org.exampleHotel.domain.room.dto.RoomDTO;
 import org.exampleHotel.exceptions.WrongOptionException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomService {
 
-    private final RoomRepository repository = new RoomRepository();
+    private final static RoomRepository repository = new RoomRepository();
     public Room createNewRoom(int number, int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
         for(int i=0;i<bedTypesOptions.length;i=i+1) {
@@ -42,6 +44,10 @@ public class RoomService {
         this.repository.remove(id);
     }
 
+    public Room getRoomById(long roomId) {
+        return this.repository.getById(roomId);
+    }
+
     public void edit(int id, int number, int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
         for(int i=0;i<bedTypesOptions.length;i=i+1) {
@@ -63,4 +69,15 @@ public class RoomService {
         }
         this.repository.edit(id,number,bedTypes);
     }
+public  List<RoomDTO> getAllAsDTO(){
+        List<RoomDTO> result = new ArrayList<>();
+        List<Room> allRooms = repository.getAll();
+        for (Room room : allRooms){
+            RoomDTO roomDTO = room.generateDTO();
+        }
+        return result;
 }
+
+
+}
+

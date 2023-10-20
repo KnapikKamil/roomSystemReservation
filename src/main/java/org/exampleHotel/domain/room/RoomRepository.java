@@ -69,6 +69,9 @@ public class RoomRepository {
 
             for (String guestAsString : roomsAsString) {
                 String[] roomData = guestAsString.split(",");
+                if (roomData[0] == null || roomData[0].trim().isEmpty()){
+                    continue;
+                }
                 int id = Integer.parseInt(roomData[0]);
                 int number = Integer.parseInt(roomData[1]);
                 String bedTypesData = roomData[2];
@@ -85,9 +88,6 @@ public class RoomRepository {
         }
 
     }
-
-
-
 
     private int findNewId() {
         int max = 0;
@@ -117,5 +117,12 @@ public class RoomRepository {
         this.addExistingRoom(id, number, bedTypes);
     }
 
-
+    public Room getById(long id) {
+        for (Room room : this.rooms) {
+            if (room.getId() == id) {
+                return room;
+            }
+        }
+        return null;
+    }
 }

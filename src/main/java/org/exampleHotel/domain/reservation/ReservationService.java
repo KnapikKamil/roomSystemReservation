@@ -16,12 +16,15 @@ public class ReservationService {
     private final GuestService guestService = new GuestService();
     private final ReservationRepository repository = new ReservationRepository();
 
-    public Reservation createNewReservation(LocalDate from, LocalDate to, int roomId, int guestId) {
+    public Reservation createNewReservation(LocalDate from, LocalDate to, int roomId, int guestId) throws IllegalArgumentException{
         Room room = this.roomService.getRoomById(roomId);
         Guest guest = this.guestService.getGuestById(guestId);
 
         LocalDateTime fromWithTime = from.atTime(Properties.HOTEL_NIGHT_START_HOUR, Properties.HOTEL_NIGHT_START_MINUTE);
         LocalDateTime toWithTime = to.atTime(Properties.HOTEL_NIGHT_END_HOUR, Properties.HOTEL_NIGHT_END_MINUTE);
+        if (toWithTime.isBefore(fromWithTime)){
+            throw new IllegalArgumentException();
+        }
 
         return this.repository.createNewReservation(room, guest, fromWithTime, toWithTime);
     }
@@ -40,8 +43,18 @@ public class ReservationService {
         this.repository.remove(id);
     }
 
-    public void edit(int id, LocalDate from, LocalDate to, int roomId, int guestId) {
+    public Reservation edit(int id, LocalDate from, LocalDate to, int roomId, int guestId) throws IllegalArgumentException{
 
-        this.repository.edit(id, from, to, roomId, guestId);
+
+        Room room = this.roomService.getRoomById(roomId);
+        Guest guest = this.guestService.getGuestById(guestId);
+
+        LocalDateTime fromWithTime = from.atTime(Properties.HOTEL_NIGHT_START_HOUR, Properties.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithTime = to.atTime(Properties.HOTEL_NIGHT_END_HOUR, Properties.HOTEL_NIGHT_END_MINUTE);
+        if (toWithTime.isBefore(fromWithTime)){
+            throw new IllegalArgumentException();
+        }
+
+        return this.repository.edit(id ,room, guest, fromWithTime, toWithTime);
     }
 }

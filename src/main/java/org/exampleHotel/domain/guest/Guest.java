@@ -1,6 +1,7 @@
 package org.exampleHotel.domain.guest;
 
 import org.exampleHotel.domain.guest.Gender;
+import org.exampleHotel.domain.guest.dto.GuestDTO;
 
 public class Guest {
     private final int id;
@@ -25,5 +26,8 @@ public class Guest {
     }
     String toCSV(){
        return String.format("%d,%s,%s,%d,%s%s",this.id, this.firstName, this.lastName, this.age, this.gender, System.getProperty("line.separator"));
+    }
+    public GuestDTO createDTO(){
+        return new GuestDTO(this.id, this.firstName, this.lastName, this.age, this.gender);
     }
 }
