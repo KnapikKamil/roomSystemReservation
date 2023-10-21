@@ -24,6 +24,8 @@ public class TextUI {
     private final RoomService roomService = new RoomService();
     private final ReservationService reservationService = new ReservationService();
 
+
+
     private void readNewGuestData(Scanner input) {
         System.out.println("Tworzymy nowego gościa.");
 
@@ -84,9 +86,10 @@ public class TextUI {
 
     public void showMainMenu() {
         System.out.println("Trwa ładowanie danych..");
-        this.guestService.readAll();
+       this.guestService.readAll();
         this.roomService.readAll();
         this.reservationService.readAll();
+
         Scanner input = new Scanner(System.in);
         try {
             performerAction(input);

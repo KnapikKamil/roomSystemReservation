@@ -74,6 +74,7 @@ public  List<RoomDTO> getAllAsDTO(){
         List<Room> allRooms = repository.getAll();
         for (Room room : allRooms){
             RoomDTO roomDTO = room.generateDTO();
+            result.add(roomDTO);
         }
         return result;
 }
