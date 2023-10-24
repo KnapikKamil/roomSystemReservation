@@ -57,6 +57,9 @@ public class ReservationRepository {
             throw new PersistenceToFileException(file.toString(), "write", "reservation data");
         }
     }
+    public List<Reservation> getAll() {
+        return this.reservations;
+    }
 
     public void readAll() {
         String name = "reservations.csv";

@@ -1,15 +1,13 @@
 package org.exampleHotel.domain.guest.dto;
 
-import org.exampleHotel.domain.guest.Gender;
-
 public class GuestDTO {
     private  int id;
     private String firstName;
     private String lastName;
     private int age;
-    private Gender gender;
+    private String gender;
 
-    public GuestDTO(int id, String firstName, String lastName, int age, Gender gender) {
+    public GuestDTO(int id, String firstName, String lastName, int age, String gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,7 +31,7 @@ public class GuestDTO {
         return age;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 }

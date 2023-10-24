@@ -1,6 +1,5 @@
 package org.exampleHotel.domain.guest;
 
-import org.exampleHotel.domain.guest.Gender;
 import org.exampleHotel.domain.guest.dto.GuestDTO;
 
 public class Guest {
@@ -21,13 +20,37 @@ public class Guest {
        this.age = age;
        this.gender = gender;
    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
     public String getInfo(){
         return   String.format("%d %s %s (%d) %s ",this.id, this.firstName, this.lastName, this.age, this.gender);
     }
     String toCSV(){
        return String.format("%d,%s,%s,%d,%s%s",this.id, this.firstName, this.lastName, this.age, this.gender, System.getProperty("line.separator"));
     }
-    public GuestDTO createDTO(){
-        return new GuestDTO(this.id, this.firstName, this.lastName, this.age, this.gender);
+
+    public GuestDTO getAsDTO() {
+        String gender = "Nie binarna";
+        if (this.gender.equals(Gender.FEMALE)){
+            gender = "Kobieta";
+        } else if (gender.equals(Gender.MALE)) {
+            gender = "Mężczyzna";
+        }
+        return new GuestDTO(this.id, this.firstName, this.lastName, this.age, gender);
     }
 }

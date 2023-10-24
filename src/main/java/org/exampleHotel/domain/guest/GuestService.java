@@ -71,7 +71,8 @@ public class GuestService {
         List<GuestDTO> result = new ArrayList<>();
         List<Guest> allGuests = repository.getAll();
         for (Guest guest : allGuests){
-            GuestDTO guestDTO = guest.createDTO();
+            GuestDTO guestDTO = guest.getAsDTO();
+            result.add(guestDTO);
         }
         return result;
     }

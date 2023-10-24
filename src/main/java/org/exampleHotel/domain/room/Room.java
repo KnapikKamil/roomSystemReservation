@@ -18,6 +18,14 @@ public class Room {
         this.beds = bedTypes;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public BedType[] getBeds() {
+        return beds;
+    }
+
     public String getInfo() {
         StringBuilder bedInfo = new StringBuilder("Rodzaje łóżek w pokoju:\n");
         for (BedType bed : beds) {
