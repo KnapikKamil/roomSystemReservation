@@ -1,5 +1,6 @@
 package org.exampleHotel.domain.room;
 
+import org.exampleHotel.domain.reservation.ReservationRepository;
 import org.exampleHotel.exceptions.PersistenceToFileException;
 import org.exampleHotel.util.Properties;
 
@@ -15,6 +16,14 @@ import java.util.Map;
 
 public class RoomRepository {
     private final List<Room> rooms = new ArrayList<>();
+    private final static RoomRepository instance = new RoomRepository();
+
+    private RoomRepository(){
+
+    }
+    public static RoomRepository getInstance() {
+        return instance;
+    }
 
     Room createNewRoom(int number, BedType[] bedTypes) {
 
