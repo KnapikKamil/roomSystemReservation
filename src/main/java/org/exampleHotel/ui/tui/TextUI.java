@@ -1,5 +1,6 @@
 package org.exampleHotel.ui.tui;
 
+import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.reservation.Reservation;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.exceptions.OnlyNumberException;
@@ -20,9 +21,9 @@ import java.util.Scanner;
 
 public class TextUI {
 
-    private final GuestService guestService = new GuestService();
-    private final RoomService roomService = new RoomService();
-    private final ReservationService reservationService = new ReservationService();
+    private final GuestService guestService = ObjectPool.getGuestService();
+    private final RoomService roomService = ObjectPool.getRoomService();
+    private final ReservationService reservationService = ObjectPool.getReservationService();
 
 
 

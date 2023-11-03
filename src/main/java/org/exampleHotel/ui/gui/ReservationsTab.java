@@ -4,6 +4,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.reservation.dto.ReservationDTO;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 public class ReservationsTab {
     private Tab reservationTab;
-    private ReservationService reservationService = new ReservationService();
+    private ReservationService reservationService = ObjectPool.getReservationService();
 
     public ReservationsTab(){
         this.reservationTab = new Tab();

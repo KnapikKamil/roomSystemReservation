@@ -1,5 +1,6 @@
 package org.exampleHotel.domain.reservation;
 
+import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.guest.Gender;
 import org.exampleHotel.domain.guest.Guest;
 import org.exampleHotel.domain.guest.GuestService;
@@ -21,8 +22,8 @@ import java.util.List;
 public class ReservationRepository {
 
     List<Reservation> reservations = new ArrayList<>();
-    RoomService roomService = RoomService.getInstance();
-    GuestService guestService = new GuestService();
+    RoomService roomService = ObjectPool.getRoomService();
+    GuestService guestService = ObjectPool.getGuestService();
     private final static ReservationRepository instance = new ReservationRepository();
 
     private ReservationRepository() {

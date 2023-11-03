@@ -3,6 +3,7 @@ package org.exampleHotel;
 import javafx.application.Application;
 
 import javafx.stage.Stage;
+import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.room.RoomService;
@@ -15,9 +16,9 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    private static final GuestService guestService = new GuestService();
-    private static final RoomService roomService = new RoomService();
-    private static final ReservationService reservationService = new ReservationService();
+    private static final GuestService guestService = ObjectPool.getGuestService();
+    private static final RoomService roomService = ObjectPool.getRoomService();
+    private static final ReservationService reservationService = ObjectPool.getReservationService();
 
     private static final TextUI textUI = new TextUI();
 
@@ -36,17 +37,26 @@ public class Main extends Application {
 
         Application.launch(args);
 
-      //   textUI.showSystemInfo();
-      //   textUI.showMainMenu();
+        //   textUI.showSystemInfo();
+        //   textUI.showMainMenu();
     }
-    public  void start(Stage primaryStage) {
+
+    @Override
+    public void start(Stage primaryStage) {
         PrimaryStage primary = new PrimaryStage();
         primary.initialize(primaryStage);
 
 
-         }
-
-
-
     }
+
+    @Override
+    public void stop() {
+        System.out.println("Wychodzę z aplikacji, zapisuje dane.");
+        guestService.saveAll();
+        roomService.saveAll();
+        reservationService.saveAll();
+    }
+
+
+}
 
