@@ -3,8 +3,8 @@ package org.exampleHotel.domain.room;
 import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.room.dto.RoomDTO;
 import org.exampleHotel.exceptions.WrongOptionException;
+import org.exampleHotel.util.Properties;
 
-import java.rmi.server.RemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +20,13 @@ public class RoomService {
         for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;
             switch (bedTypesAsString.get(i)) {
-                case "Pojedyńcze":
+                case Properties.SINGLE_BED :
                     bedType = BedType.SINGLE;
                     break;
-                case "Podwójne":
+                case Properties.DOUBLE_BED:
                     bedType = BedType.DOUBLE;
                     break;
-                case "Królewskie":
+                case Properties.KING_SIZE:
                     bedType = BedType.KING_SIZE;
                     break;
                 default:
