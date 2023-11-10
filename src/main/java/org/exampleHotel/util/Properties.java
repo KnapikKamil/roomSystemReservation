@@ -23,7 +23,12 @@ public class Properties {
     public final static String DOUBLE_BED = "Podwójne";
     public final static String KING_SIZE = "Królewskie";
 
+    public static final String FEMALE = "Kobieta";
+    public static final String MALE = "Mężczyzna";
+    public static final String LGBT = "Nie binarna";
+
     public static final Path DATA_DIRECTORY = Paths.get(System.getProperty("user.home"), "reservation_system");
+
 
     public static void createDataDirectory() throws IOException {
         if (!Files.isDirectory(DATA_DIRECTORY)) {

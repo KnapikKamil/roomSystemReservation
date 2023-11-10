@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+
     private static final GuestService guestService = ObjectPool.getGuestService();
     private static final RoomService roomService = ObjectPool.getRoomService();
     private static final ReservationService reservationService = ObjectPool.getReservationService();
@@ -51,7 +52,7 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        System.out.println("Wychodzę z aplikacji, zapisuje dane.");
+        System.out.println(Properties.MALE+" Wychodzę z aplikacji, zapisuje dane.");
         guestService.saveAll();
         roomService.saveAll();
         reservationService.saveAll();

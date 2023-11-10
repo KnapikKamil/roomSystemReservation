@@ -29,9 +29,6 @@ public class GuestService {
             case 2:
                 gender = Gender.MALE;
                 break;
-            case 3:
-                gender = Gender.LGBTQ;
-                break;
             default:
                 gender = Gender.LGBTQ;
         }
@@ -63,9 +60,6 @@ public class GuestService {
                 break;
             case 2:
                 gender = Gender.MALE;
-                break;
-            case 3:
-                gender = Gender.LGBTQ;
                 break;
             default:
                 gender = Gender.LGBTQ;
