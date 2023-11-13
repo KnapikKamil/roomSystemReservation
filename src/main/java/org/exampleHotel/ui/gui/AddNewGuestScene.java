@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
-import org.exampleHotel.domain.guest.Gender;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.guest.dto.GuestDTO;
 import org.exampleHotel.util.Properties;
@@ -71,14 +70,13 @@ public class AddNewGuestScene {
 
             this.guestService.createNewGuest(firstName, lastName, age, genderSelection);
 
-
             guestsTableView.getItems().clear();
-            // Błąd odczytu
+            /* Błąd odczytu, do poprawki
+            Mężczyzna w GUI odczytuje jako nie binarny
+            */
             guestsTableView.getItems().addAll(this.guestService.getAllAsDTO());
             modelStage.close();
-
         });
-
 
         gridPane.add(firstNameLabel, 0, 0);
         gridPane.add(firstNameField, 1, 0);
@@ -90,7 +88,6 @@ public class AddNewGuestScene {
         gridPane.add(genderField, 1, 3);
         gridPane.add(createNewGuestButton, 1, 4);
 
-
         this.mainScene = new Scene(gridPane, 1280, 640);
         this.mainScene.getStylesheets().add(getClass().getClassLoader().getResource("hotelReservation.css").toExternalForm());
 
@@ -99,4 +96,5 @@ public class AddNewGuestScene {
     public Scene getMainScene() {
         return this.mainScene;
     }
+
 }

@@ -21,8 +21,7 @@ public class Main extends Application {
     private static final RoomService roomService = ObjectPool.getRoomService();
     private static final ReservationService reservationService = ObjectPool.getReservationService();
 
-    private static final TextUI textUI = new TextUI();
-
+   //  private static final TextUI textUI = new TextUI();
 
     public static void main(String[] args) {
 
