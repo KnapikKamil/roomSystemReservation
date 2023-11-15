@@ -1,4 +1,4 @@
-package org.exampleHotel.ui.gui;
+package org.exampleHotel.ui.gui.reservations;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
-import org.exampleHotel.domain.guest.Guest;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.reservation.dto.ReservationDTO;

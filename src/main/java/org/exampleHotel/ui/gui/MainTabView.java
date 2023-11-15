@@ -2,6 +2,9 @@ package org.exampleHotel.ui.gui;
 
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import org.exampleHotel.ui.gui.guests.GuestsTab;
+import org.exampleHotel.ui.gui.reservations.ReservationsTab;
+import org.exampleHotel.ui.gui.rooms.RoomsTab;
 
 public class MainTabView {
 

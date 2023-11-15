@@ -1,4 +1,4 @@
-package org.exampleHotel.ui.gui;
+package org.exampleHotel.ui.gui.guests;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

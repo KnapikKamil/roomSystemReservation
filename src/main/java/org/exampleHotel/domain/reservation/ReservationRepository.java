@@ -104,7 +104,7 @@ public class ReservationRepository {
 
     public void remove(int id) {
         int reservationToBeRemovedIndex = -1;
-        for (int i = 0; i < reservations.size(); i++) {
+        for (int i = 0; i < this.reservations.size(); i++) {
             if (this.reservations.get(i).getId() == id) {
                 reservationToBeRemovedIndex = i;
                 break;

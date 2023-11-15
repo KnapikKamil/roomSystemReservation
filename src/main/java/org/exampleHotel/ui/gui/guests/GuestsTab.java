@@ -1,9 +1,7 @@
-package org.exampleHotel.ui.gui;
+package org.exampleHotel.ui.gui.guests;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -11,6 +9,8 @@ import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.guest.dto.GuestDTO;
+import org.exampleHotel.domain.room.dto.RoomDTO;
+import org.exampleHotel.ui.gui.guests.AddNewGuestScene;
 
 public class GuestsTab {
     private Tab guestTab;
@@ -42,7 +42,30 @@ public class GuestsTab {
         ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
         TableColumn<GuestDTO, String> genderColumn = new TableColumn<>("Płeć");
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        tableView.getColumns().addAll(firstNameColumn, lastNameColumn, ageColumn, genderColumn);
+        TableColumn<GuestDTO, GuestDTO> deleteColumn = new TableColumn<>("Usuń");
+        deleteColumn.setCellValueFactory( value -> new ReadOnlyObjectWrapper(value.getValue()));
+
+        deleteColumn.setCellFactory( param -> new TableCell<>(){
+            Button deleteButton = new Button("Usuń");
+
+            @Override
+            protected void updateItem(GuestDTO value, boolean empty){
+                super.updateItem(value, empty);
+
+                if (value==null){
+                    setGraphic(null);
+                }else{
+                    setGraphic(deleteButton);
+                    deleteButton.setOnAction(actionEvent -> {
+                       guestService.remove(value.getId());
+                        tableView.getItems().remove(value);
+                    });
+                }
+            }
+        });
+
+
+        tableView.getColumns().addAll(firstNameColumn, lastNameColumn, ageColumn, genderColumn, deleteColumn);
         tableView.getItems().addAll(guestService.getAllAsDTO());
         return tableView;
     }

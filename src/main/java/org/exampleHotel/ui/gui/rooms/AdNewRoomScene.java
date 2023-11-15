@@ -1,4 +1,4 @@
-package org.exampleHotel.ui.gui;
+package org.exampleHotel.ui.gui.rooms;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

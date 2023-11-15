@@ -1,16 +1,16 @@
-package org.exampleHotel.ui.gui;
+package org.exampleHotel.ui.gui.reservations;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
+import org.exampleHotel.domain.guest.dto.GuestDTO;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.reservation.dto.ReservationDTO;
+import org.exampleHotel.ui.gui.reservations.AddNewReservationScene;
 
 import java.time.LocalDateTime;
 
@@ -52,8 +52,30 @@ public class ReservationsTab {
 
         TableColumn<ReservationDTO, Integer> guestColumn = new TableColumn<>("Rezerwujący");
         guestColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<ReservationDTO, ReservationDTO> deleteColumn = new TableColumn<>("Usuń");
+        deleteColumn.setCellValueFactory( value -> new ReadOnlyObjectWrapper(value.getValue()));
 
-        tableView.getColumns().addAll(fromColumn, toColumn, roomColumn, guestColumn);
+        deleteColumn.setCellFactory( param -> new TableCell<>(){
+            Button deleteButton = new Button("Usuń");
+
+            @Override
+            protected void updateItem(ReservationDTO value, boolean empty){
+                super.updateItem(value, empty);
+
+                if (value==null){
+                    setGraphic(null);
+                }else{
+                    setGraphic(deleteButton);
+                    deleteButton.setOnAction(actionEvent -> {
+                        reservationService.remove(value.getId());
+                        tableView.getItems().remove(value);
+                    });
+                }
+            }
+        });
+
+
+        tableView.getColumns().addAll(fromColumn, toColumn, roomColumn, guestColumn, deleteColumn);
 
 
         tableView.getItems().addAll(reservationService.getAsDTO());

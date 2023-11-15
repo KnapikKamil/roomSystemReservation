@@ -16,29 +16,17 @@ public class RoomService {
     private RoomService(){
     }
     public Room createNewRoom(int number, List<String> bedTypesAsString) {
-        BedType[] bedTypes = new BedType[bedTypesAsString.size()];
-        for (int i = 0; i < bedTypesAsString.size(); i++) {
-            BedType bedType;
-            switch (bedTypesAsString.get(i)) {
-                case Properties.SINGLE_BED :
-                    bedType = BedType.SINGLE;
-                    break;
-                case Properties.DOUBLE_BED:
-                    bedType = BedType.DOUBLE;
-                    break;
-                case Properties.KING_SIZE:
-                    bedType = BedType.KING_SIZE;
-                    break;
-                default:
-                    throw new WrongOptionException("Wrong option when selecting bed type");
-            }
-            bedTypes[i] = bedType;
-        }
+        BedType[] bedTypes = getBedTypes(bedTypesAsString);
         return repository.createNewRoom(number, bedTypes);
     }
     public Room createNewRoom(int number, int[] bedTypesOptions) {
+        BedType[] bedTypes = getBedTypes(bedTypesOptions);
+        return repository.createNewRoom(number, bedTypes);
+    }
+
+    private static BedType[] getBedTypes(int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
-        for(int i=0;i<bedTypesOptions.length;i=i+1) {
+        for(int i = 0; i< bedTypesOptions.length; i=i+1) {
             BedType bedType;
             switch (bedTypesOptions[i]) {
                 case 1:
@@ -55,9 +43,10 @@ public class RoomService {
             }
             bedTypes[i] = bedType;
         }
-        return repository.createNewRoom(number, bedTypes);
+        return bedTypes;
     }
-     public List<Room> getAllRooms(){
+
+    public List<Room> getAllRooms(){
         return  repository.getAll();
     }
     public void saveAll() {
@@ -75,25 +64,37 @@ public class RoomService {
         return this.repository.getById(roomId);
     }
 
-    public void edit(int id, int number, int[] bedTypesOptions) {
-        BedType[] bedTypes = new BedType[bedTypesOptions.length];
-        for(int i=0;i<bedTypesOptions.length;i=i+1) {
+    public void edit(int id, int number, List<String> bedTypesAsString){
+        BedType[] bedTypes = getBedTypes(bedTypesAsString);
+        this.repository.edit(id, number, bedTypes);
+
+    }
+
+    private static BedType[] getBedTypes(List<String> bedTypesAsString) {
+        BedType[] bedTypes = new BedType[bedTypesAsString.size()];
+        for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;
-            switch (bedTypesOptions[i]) {
-                case 1:
+            switch (bedTypesAsString.get(i)) {
+                case Properties.SINGLE_BED:
                     bedType = BedType.SINGLE;
                     break;
-                case 2:
+                case Properties.DOUBLE_BED:
                     bedType = BedType.DOUBLE;
                     break;
-                case 3:
+                case Properties.KING_SIZE:
                     bedType = BedType.KING_SIZE;
                     break;
                 default:
                     throw new WrongOptionException("Wrong option when selecting bed type");
             }
             bedTypes[i] = bedType;
+
         }
+        return bedTypes;
+    }
+
+    public void edit(int id, int number, int[] bedTypesOptions) {
+        BedType[] bedTypes = getBedTypes(bedTypesOptions);
         this.repository.edit(id,number,bedTypes);
     }
 public  List<RoomDTO> getAllAsDTO(){

@@ -11,7 +11,7 @@ public class Reservation {
     private final int id;
     private final Room room;
     private final Guest guest;
-    private final LocalDateTime  from;
+    private final LocalDateTime from;
     private final LocalDateTime to;
 
     public Reservation(int id, Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
@@ -21,17 +21,53 @@ public class Reservation {
         this.from = from;
         this.to = to;
     }
-    String toCSV(){
-       return String.format("%s,%s,%s,%s,%s%s", this.id, this.room.getId(), this.guest.getId(), this.from.toString(), this.to.toString(), System.getProperty("line.separator"));
+
+    String toCSV() {
+        return String.format("%s,%s,%s,%s,%s%s", this.id, getRoomId(), getGuestId(), this.from.toString(), this.to.toString(), System.getProperty("line.separator"));
     }
-    public String getInfo(){
-        return String.format("%s,%s,%s,%s,%s",this.id, this.room.getId(), this.guest.getId(), this.from.toString(), this.to.toString());
+
+    public String getInfo() {
+        return String.format("%s,%s,%s,%s,%s", this.id, getRoomId(), getGuestId(), this.from.toString(), this.to.toString());
     }
-    int getId(){
+
+    int getId() {
         return this.id;
     }
 
     public ReservationDTO getAsDTO() {
-        return new ReservationDTO(this.id, this.from,  this.to, this.room.getId(), this.room.getNumber(), this.guest.getId(), this.guest.getFirstName() + " " + this.guest.getLastName());
+        return new ReservationDTO(this.id, this.from, this.to, getRoomId(), getRoomNumber(), getGuestId(), getGuestName());
     }
+
+    private int getRoomId() {
+        if (this.room != null) {
+            return this.room.getId();
+        } else {
+            return 0;
+        }
+    }
+
+    private int getRoomNumber() {
+        if (this.room != null) {
+            return this.room.getNumber();
+        } else {
+            return 0;
+        }
+    }
+
+    private int getGuestId() {
+        if (this.guest != null) {
+            return this.guest.getId();
+        } else {
+            return 0;
+        }
+    }
+
+    private String getGuestName() {
+        if (this.guest != null) {
+            return this.guest.getFirstName() + " " + this.guest.getLastName();
+        } else {
+            return "";
+        }
+    }
+
 }
