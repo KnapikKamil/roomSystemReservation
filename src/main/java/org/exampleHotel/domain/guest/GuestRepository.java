@@ -75,11 +75,21 @@ public class GuestRepository {
                 }
                 int id = Integer.parseInt(guestData[0]);
                 int age = Integer.parseInt(guestData[3]);
-                Gender gender = Gender.valueOf(guestData[4]);
+
+
+            Gender gender = Gender.LGBTQ;
+
+            if (guestData[4].equals(Properties.FEMALE)) {
+                gender = Gender.FEMALE;
+            } else if (guestData[4].equals(Properties.MALE)) {
+                gender = Gender.MALE;
+            } else if (guestData[4].equals(Properties.LGBT)) {
+                gender = Gender.LGBTQ;
+            }
                 addExistingGuest(id, guestData[1], guestData[2], age, gender);
             }
         } catch (IOException e) {
-            throw new PersistenceToFileException(file.toString(), "read", "guest data");
+            throw new PersistenceToFileException(file.toString(), "read", "guests data");
         }
     }
 
