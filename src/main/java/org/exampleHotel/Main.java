@@ -9,8 +9,7 @@ import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.room.RoomService;
 import org.exampleHotel.exceptions.PersistenceToFileException;
 import org.exampleHotel.ui.gui.PrimaryStage;
-import org.exampleHotel.ui.tui.TextUI;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.io.IOException;
 
@@ -26,13 +25,14 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         try {
-            Properties.createDataDirectory();
+            SystemUtils su = new SystemUtils();
+            SystemUtils.createDataDirectory();
             System.out.println("Trwa ładowanie danych..");
             guestService.readAll();
             roomService.readAll();
             reservationService.readAll();
         } catch (IOException e) {
-            throw new PersistenceToFileException(Properties.DATA_DIRECTORY.toString(), "create", "directory");
+            throw new PersistenceToFileException(SystemUtils.DATA_DIRECTORY.toString(), "create", "directory");
         }
 
         Application.launch(args);
@@ -51,7 +51,7 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        System.out.println(Properties.MALE+" Wychodzę z aplikacji, zapisuje dane.");
+        System.out.println(SystemUtils.MALE+" Wychodzę z aplikacji, zapisuje dane.");
         guestService.saveAll();
         roomService.saveAll();
         reservationService.saveAll();

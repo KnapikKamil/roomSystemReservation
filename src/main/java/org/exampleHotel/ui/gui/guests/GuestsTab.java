@@ -10,10 +10,6 @@ import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.guest.dto.GuestDTO;
-import org.exampleHotel.domain.room.dto.RoomDTO;
-import org.exampleHotel.ui.gui.PrimaryStage;
-import org.exampleHotel.ui.gui.guests.AddNewGuestScene;
-import org.exampleHotel.ui.gui.rooms.EditRoomScene;
 
 public class GuestsTab {
     private Tab guestTab;

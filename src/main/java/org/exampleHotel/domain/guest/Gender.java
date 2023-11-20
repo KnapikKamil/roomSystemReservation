@@ -1,11 +1,11 @@
 package org.exampleHotel.domain.guest;
 
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 public enum Gender {
-    FEMALE(Properties.FEMALE),
-    MALE(Properties.MALE),
-    LGBTQ(Properties.LGBT);
+    FEMALE(SystemUtils.FEMALE),
+    MALE(SystemUtils.MALE),
+    LGBTQ(SystemUtils.LGBT);
 
     private String asStr;
 

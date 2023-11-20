@@ -5,15 +5,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 
-public class Properties {
+public class SystemUtils {
 
-    public static final String HOTEL_NAME = "Salt ";
-    public final static int SYSTEM_VERSION = 1;
+    private final Properties prop = new Properties();
+
+    public static final String HOTEL_NAME = "Other ";
+    public static String SYSTEM_VERSION;
     public final static boolean IS_DEVELOPER_VERSION = true;
 
     public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
     public final static int HOTEL_NIGHT_START_HOUR = 14;
     public final static int HOTEL_NIGHT_START_MINUTE = 30;
     public final static int HOTEL_NIGHT_END_HOUR = 12;
@@ -33,6 +35,15 @@ public class Properties {
     public static void createDataDirectory() throws IOException {
         if (!Files.isDirectory(DATA_DIRECTORY)) {
             Files.createDirectory(DATA_DIRECTORY);
+        }
+    }
+
+    public SystemUtils() {
+        try {
+            this.prop.load(this.getClass().getClassLoader().getResourceAsStream(".properties"));
+            SystemUtils.SYSTEM_VERSION = prop.get("system.version").toString();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

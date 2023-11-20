@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.guest.dto.GuestDTO;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 
 public class AddNewGuestScene {
@@ -46,8 +46,8 @@ public class AddNewGuestScene {
                 ageField.setText(oldValue);
             }
         });
-        genderField.getItems().addAll(Properties.FEMALE, Properties.MALE, Properties.LGBT);
-          genderField.setValue(Properties.LGBT);
+        genderField.getItems().addAll(SystemUtils.FEMALE, SystemUtils.MALE, SystemUtils.LGBT);
+          genderField.setValue(SystemUtils.LGBT);
 
         Button createNewGuestButton = new Button("Utwórz gościa");
 
@@ -58,11 +58,11 @@ public class AddNewGuestScene {
             String gender = genderField.getValue();
             int genderSelection;
 
-            if (gender.equals(Properties.FEMALE)) {
+            if (gender.equals(SystemUtils.FEMALE)) {
                 genderSelection = 1;
-            } else if (gender.equals(Properties.MALE)) {
+            } else if (gender.equals(SystemUtils.MALE)) {
                 genderSelection = 2;
-            } else if (gender.equals(Properties.LGBT)) {
+            } else if (gender.equals(SystemUtils.LGBT)) {
                 genderSelection = 3;
             } else {
                 genderSelection = -1;

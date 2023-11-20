@@ -1,20 +1,18 @@
 package org.exampleHotel.domain.reservation;
 
 import org.exampleHotel.domain.ObjectPool;
-import org.exampleHotel.domain.guest.Gender;
 import org.exampleHotel.domain.guest.Guest;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.room.Room;
 import org.exampleHotel.domain.room.RoomService;
 import org.exampleHotel.exceptions.PersistenceToFileException;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +52,7 @@ public class ReservationRepository {
 
     public void saveAll() {
         String name = "reservations.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         StringBuilder sb = new StringBuilder("");
         for (Reservation reservation : this.reservations) {
             sb.append(reservation.toCSV());
@@ -71,7 +69,7 @@ public class ReservationRepository {
 
     public void readAll() {
         String name = "reservations.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         if (!Files.exists(file)) {
             return;
         }

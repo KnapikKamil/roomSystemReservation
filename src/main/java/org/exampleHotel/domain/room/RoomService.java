@@ -3,7 +3,7 @@ package org.exampleHotel.domain.room;
 import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.room.dto.RoomDTO;
 import org.exampleHotel.exceptions.WrongOptionException;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,13 +75,13 @@ public class RoomService {
         for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;
             switch (bedTypesAsString.get(i)) {
-                case Properties.SINGLE_BED:
+                case SystemUtils.SINGLE_BED:
                     bedType = BedType.SINGLE;
                     break;
-                case Properties.DOUBLE_BED:
+                case SystemUtils.DOUBLE_BED:
                     bedType = BedType.DOUBLE;
                     break;
-                case Properties.KING_SIZE:
+                case SystemUtils.KING_SIZE:
                     bedType = BedType.KING_SIZE;
                     break;
                 default:

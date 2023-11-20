@@ -10,11 +10,9 @@ import org.exampleHotel.domain.guest.Guest;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.room.Room;
 import org.exampleHotel.domain.room.RoomService;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
-import java.awt.image.ImagingOpException;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -79,9 +77,9 @@ public class TextUI {
     }
 
     public void showSystemInfo() {
-        System.out.print("Witam w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
-        System.out.println("Aktualna wersja systemu: " + Properties.SYSTEM_VERSION);
-        System.out.println("Wersja developerska: " + Properties.IS_DEVELOPER_VERSION);
+        System.out.print("Witam w systemie rezerwacji dla hotelu " + SystemUtils.HOTEL_NAME);
+        System.out.println("Aktualna wersja systemu: " + SystemUtils.SYSTEM_VERSION);
+        System.out.println("Wersja developerska: " + SystemUtils.IS_DEVELOPER_VERSION);
         System.out.println("\n=========================\n");
     }
 
@@ -153,10 +151,10 @@ public class TextUI {
         int id = input.nextInt();
         System.out.println("Od kiedy? Format: DD.MM,YYYY:");
         String fromAsString = input.next();
-        LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_TIME_FORMATTER);
+        LocalDate from = LocalDate.parse(fromAsString, SystemUtils.DATE_TIME_FORMATTER);
         System.out.println("Do kiedy? Format: DD.MM.YYYY:");
         String tooASString = input.next();
-        LocalDate to = LocalDate.parse(tooASString, Properties.DATE_TIME_FORMATTER);
+        LocalDate to = LocalDate.parse(tooASString, SystemUtils.DATE_TIME_FORMATTER);
         System.out.println("Podaj ID pokoju:");
         int roomId = input.nextInt();
         System.out.println("Podaj ID gościa:");
@@ -194,10 +192,10 @@ public class TextUI {
     private void createReservation(Scanner input) {
         System.out.println("Od kiedy? Format: DD.MM,YYYY:");
         String fromAsString = input.next();
-        LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_TIME_FORMATTER);
+        LocalDate from = LocalDate.parse(fromAsString, SystemUtils.DATE_TIME_FORMATTER);
         System.out.println("Do kiedy? Format: DD.MM.YYYY:");
         String tooASString = input.next();
-        LocalDate to = LocalDate.parse(tooASString, Properties.DATE_TIME_FORMATTER);
+        LocalDate to = LocalDate.parse(tooASString, SystemUtils.DATE_TIME_FORMATTER);
         System.out.println("Podaj ID pokoju:");
         int roomId = input.nextInt();
         System.out.println("Podaj ID gościa:");

@@ -1,8 +1,7 @@
 package org.exampleHotel.domain.room;
 
-import org.exampleHotel.domain.reservation.ReservationRepository;
 import org.exampleHotel.exceptions.PersistenceToFileException;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,9 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RoomRepository {
     private final List<Room> rooms = new ArrayList<>();
@@ -48,7 +45,7 @@ public class RoomRepository {
     public void saveAll() {
         String name = "rooms.csv";
 
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         StringBuilder sb = new StringBuilder("");
 
@@ -66,7 +63,7 @@ public class RoomRepository {
     public void readAll() {
         String name = "rooms.csv";
 
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         if(!Files.exists(file)) {
             return;
@@ -88,11 +85,11 @@ public class RoomRepository {
                 BedType[] bedTypes = new BedType[bedsTypesAsString.length];
                 for (int i = 0; i < bedTypes.length; i++) {
 
-                    if(bedsTypesAsString[i].equals(Properties.SINGLE_BED)) {
+                    if(bedsTypesAsString[i].equals(SystemUtils.SINGLE_BED)) {
                         bedTypes[i] = BedType.SINGLE;
-                    } else if(bedsTypesAsString[i].equals(Properties.DOUBLE_BED)) {
+                    } else if(bedsTypesAsString[i].equals(SystemUtils.DOUBLE_BED)) {
                         bedTypes[i] = BedType.DOUBLE;
-                    } else if(bedsTypesAsString[i].equals(Properties.KING_SIZE)) {
+                    } else if(bedsTypesAsString[i].equals(SystemUtils.KING_SIZE)) {
                         bedTypes[i] = BedType.KING_SIZE;
                     }
                 }

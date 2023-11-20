@@ -2,7 +2,7 @@ package org.exampleHotel.domain.guest;
 
 
 import org.exampleHotel.exceptions.PersistenceToFileException;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -44,7 +44,7 @@ public class GuestRepository {
 
     void saveAll() {
         String name = "guests.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         StringBuilder stringBuilder = new StringBuilder("");
         for (Guest guest : guests) {
             stringBuilder.append(guest.toCSV());
@@ -59,7 +59,7 @@ public class GuestRepository {
 
     void readAll() {
         String name = "guests.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         if (!Files.exists(file)) {
             return;
@@ -79,11 +79,11 @@ public class GuestRepository {
 
             Gender gender = Gender.LGBTQ;
 
-            if (guestData[4].equals(Properties.FEMALE)) {
+            if (guestData[4].equals(SystemUtils.FEMALE)) {
                 gender = Gender.FEMALE;
-            } else if (guestData[4].equals(Properties.MALE)) {
+            } else if (guestData[4].equals(SystemUtils.MALE)) {
                 gender = Gender.MALE;
-            } else if (guestData[4].equals(Properties.LGBT)) {
+            } else if (guestData[4].equals(SystemUtils.LGBT)) {
                 gender = Gender.LGBTQ;
             }
                 addExistingGuest(id, guestData[1], guestData[2], age, gender);

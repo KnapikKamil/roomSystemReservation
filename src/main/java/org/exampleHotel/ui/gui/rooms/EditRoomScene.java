@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
 import org.exampleHotel.domain.room.RoomService;
 import org.exampleHotel.domain.room.dto.RoomDTO;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,7 @@ public class EditRoomScene {
 
     private ComboBox<String> getComboBox() {
         ComboBox<String> bedTypeField = new ComboBox<>();
-        bedTypeField.getItems().addAll(Properties.SINGLE_BED, Properties.DOUBLE_BED, Properties.KING_SIZE);
+        bedTypeField.getItems().addAll(SystemUtils.SINGLE_BED, SystemUtils.DOUBLE_BED, SystemUtils.KING_SIZE);
         bedTypeField.setValue("Pojedyńcze");
         this.comboBoxes.add(bedTypeField);
         return bedTypeField;

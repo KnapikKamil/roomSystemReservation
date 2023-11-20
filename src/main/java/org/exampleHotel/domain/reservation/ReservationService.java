@@ -6,8 +6,7 @@ import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.reservation.dto.ReservationDTO;
 import org.exampleHotel.domain.room.Room;
 import org.exampleHotel.domain.room.RoomService;
-import org.exampleHotel.domain.room.dto.RoomDTO;
-import org.exampleHotel.util.Properties;
+import org.exampleHotel.util.SystemUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,8 +32,8 @@ private final static ReservationService instance = new ReservationService();
         Room room = this.roomService.getRoomById(roomId);
         Guest guest = this.guestService.getGuestById(guestId);
 
-        LocalDateTime fromWithTime = from.atTime(Properties.HOTEL_NIGHT_START_HOUR, Properties.HOTEL_NIGHT_START_MINUTE);
-        LocalDateTime toWithTime = to.atTime(Properties.HOTEL_NIGHT_END_HOUR, Properties.HOTEL_NIGHT_END_MINUTE);
+        LocalDateTime fromWithTime = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithTime = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
         if (toWithTime.isBefore(fromWithTime)){
             throw new IllegalArgumentException();
         }
@@ -62,8 +61,8 @@ private final static ReservationService instance = new ReservationService();
         Room room = this.roomService.getRoomById(roomId);
         Guest guest = this.guestService.getGuestById(guestId);
 
-        LocalDateTime fromWithTime = from.atTime(Properties.HOTEL_NIGHT_START_HOUR, Properties.HOTEL_NIGHT_START_MINUTE);
-        LocalDateTime toWithTime = to.atTime(Properties.HOTEL_NIGHT_END_HOUR, Properties.HOTEL_NIGHT_END_MINUTE);
+        LocalDateTime fromWithTime = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithTime = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
         if (toWithTime.isBefore(fromWithTime)){
             throw new IllegalArgumentException();
         }
