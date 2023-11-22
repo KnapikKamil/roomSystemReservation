@@ -27,6 +27,7 @@ public class Main extends Application {
         try {
             SystemUtils su = new SystemUtils();
             SystemUtils.createDataDirectory();
+            su.createDataBaseConnection();
             System.out.println("Trwa ładowanie danych..");
             guestService.readAll();
             roomService.readAll();
