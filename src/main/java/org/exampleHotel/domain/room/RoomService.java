@@ -6,6 +6,7 @@ import org.exampleHotel.exceptions.WrongOptionException;
 import org.exampleHotel.util.SystemUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RoomService {
@@ -13,20 +14,23 @@ public class RoomService {
     private final RoomRepository repository = ObjectPool.getRoomRepository();
 
     private final static RoomService instance = new RoomService();
-    private RoomService(){
+
+    private RoomService() {
     }
+
     public Room createNewRoom(int number, List<String> bedTypesAsString) {
-        BedType[] bedTypes = getBedTypes(bedTypesAsString);
-        return repository.createNewRoom(number, bedTypes);
-    }
-    public Room createNewRoom(int number, int[] bedTypesOptions) {
-        BedType[] bedTypes = getBedTypes(bedTypesOptions);
+        List<BedType> bedTypes = getBedTypes(bedTypesAsString);
         return repository.createNewRoom(number, bedTypes);
     }
 
-    private static BedType[] getBedTypes(int[] bedTypesOptions) {
+    public Room createNewRoom(int number, int[] bedTypesOptions) {
+        List<BedType> bedTypes = getBedTypes(bedTypesOptions);
+        return repository.createNewRoom(number, bedTypes);
+    }
+
+    private static List<BedType> getBedTypes(int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
-        for(int i = 0; i< bedTypesOptions.length; i=i+1) {
+        for (int i = 0; i < bedTypesOptions.length; i = i + 1) {
             BedType bedType;
             switch (bedTypesOptions[i]) {
                 case 1:
@@ -43,16 +47,18 @@ public class RoomService {
             }
             bedTypes[i] = bedType;
         }
-        return bedTypes;
+        return Arrays.asList(bedTypes);
     }
 
-    public List<Room> getAllRooms(){
-        return  repository.getAll();
+    public List<Room> getAllRooms() {
+        return repository.getAll();
     }
+
     public void saveAll() {
         this.repository.saveAll();
     }
-    public void readAll(){
+
+    public void readAll() {
         this.repository.readAll();
     }
 
@@ -64,13 +70,13 @@ public class RoomService {
         return this.repository.getById(roomId);
     }
 
-    public void edit(int id, int number, List<String> bedTypesAsString){
-        BedType[] bedTypes = getBedTypes(bedTypesAsString);
+    public void edit(int id, int number, List<String> bedTypesAsString) {
+        List<BedType> bedTypes = getBedTypes(bedTypesAsString);
         this.repository.edit(id, number, bedTypes);
 
     }
 
-    private static BedType[] getBedTypes(List<String> bedTypesAsString) {
+    private static List<BedType> getBedTypes(List<String> bedTypesAsString) {
         BedType[] bedTypes = new BedType[bedTypesAsString.size()];
         for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;
@@ -90,22 +96,23 @@ public class RoomService {
             bedTypes[i] = bedType;
 
         }
-        return bedTypes;
+        return Arrays.asList(bedTypes);
     }
 
     public void edit(int id, int number, int[] bedTypesOptions) {
-        BedType[] bedTypes = getBedTypes(bedTypesOptions);
-        this.repository.edit(id,number,bedTypes);
+        List<BedType> bedTypes = getBedTypes(bedTypesOptions);
+        this.repository.edit(id, number, bedTypes);
     }
-public  List<RoomDTO> getAllAsDTO(){
+
+    public List<RoomDTO> getAllAsDTO() {
         List<RoomDTO> result = new ArrayList<>();
         List<Room> allRooms = repository.getAll();
-        for (Room room : allRooms){
+        for (Room room : allRooms) {
             RoomDTO roomDTO = room.generateDTO();
             result.add(roomDTO);
         }
         return result;
-}
+    }
 
     public static RoomService getInstance() {
         return instance;

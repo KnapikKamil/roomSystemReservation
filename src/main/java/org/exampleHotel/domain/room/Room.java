@@ -2,17 +2,20 @@ package org.exampleHotel.domain.room;
 
 import org.exampleHotel.domain.room.dto.RoomDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
 
     private final int id;
     private final int number;
-    private final BedType[] beds;
+    private final List<BedType> beds;
 
     public int getId() {
         return id;
     }
 
-    Room(int id, int number, BedType[] bedTypes) {
+    Room(int id, int number, List<BedType> bedTypes) {
         this.id = id;
         this.number = number;
         this.beds = bedTypes;
@@ -22,7 +25,7 @@ public class Room {
         return number;
     }
 
-    public BedType[] getBeds() {
+    public List<BedType> getBeds() {
         return beds;
     }
 
@@ -35,22 +38,25 @@ public class Room {
     }
 
     String toCSV() {
-        String[] bedsAsString = getBedsAsString();
+       List<String> bedsAsString = getBedsAsString();
         String bedTypes = String.join("#", bedsAsString);
         return String.format("%d,%d,%s%s", this.id, this.number, bedTypes, System.getProperty("line.separator"));
     }
 
-    private String[] getBedsAsString() {
-        String[] bedsAsString = new String[this.beds.length];
-        for (int i = 0; i < this.beds.length; i++) {
-            bedsAsString[i] = this.beds[i].toString();
+    private List<String> getBedsAsString() {
+
+        List<String> bedsAsString = new ArrayList<>();
+
+        for (int i = 0; i < this.beds.size(); i++) {
+            bedsAsString.add(this.beds.get(i).toString());
         }
         return bedsAsString;
     }
 
 
     public RoomDTO generateDTO() {
-        String[] bedsAsString = getBedsAsString();
+
+        List<String> bedsAsString = getBedsAsString();
         String bedTypes = String.join(",", bedsAsString);
 
         int roomSize = 0;
@@ -58,6 +64,6 @@ public class Room {
             roomSize += bedType.getSize();
         }
 
-        return new RoomDTO(this.id, this.number, bedTypes, beds.length, roomSize);
+        return new RoomDTO(this.id, this.number, bedTypes, beds.size(), roomSize);
     }
 }
