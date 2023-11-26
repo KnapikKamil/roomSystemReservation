@@ -35,12 +35,12 @@ public class Reservation {
     }
 
     public ReservationDTO getAsDTO() {
-        return new ReservationDTO(this.id, this.from, this.to, getRoomId(), getRoomNumber(), getGuestId(), getGuestName());
+        return new ReservationDTO(this.id, this.from, this.to,getRoomId(), getRoomNumber(), getGuestId(), getGuestName());
     }
 
     private int getRoomId() {
         if (this.room != null) {
-            return this.room.getId();
+            return (int) this.room.getId();
         } else {
             return 0;
         }

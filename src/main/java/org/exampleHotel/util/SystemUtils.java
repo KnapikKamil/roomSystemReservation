@@ -33,6 +33,8 @@ public class SystemUtils {
     public static final String MALE = "Mężczyzna";
     public static final String LGBT = "Nie binarna";
 
+    public static Connection connection;
+
     public static final Path DATA_DIRECTORY = Paths.get(System.getProperty("user.home"), "reservation_system");
 
 
@@ -55,7 +57,7 @@ public class SystemUtils {
         try {
             Class.forName("org.h2.Driver");
             try {
-                Connection connection = DriverManager.getConnection("jdbc:h2:~/reservationSytem", "test", "");
+                connection = DriverManager.getConnection("jdbc:h2:~/reservationSytem", "test", "");
                 Statement statement = connection.createStatement();
                 statement.execute("CREATE TABLE IF NOT EXISTS ROOMS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_NUMBER INT NOT NULL UNIQUE)");
                 statement.execute("CREATE TABLE IF NOT EXISTS BEDS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_ID INT NOT NULL, BED VARCHAR2(55), FOREIGN KEY (ROOM_ID) REFERENCES ROOMS(ID))");

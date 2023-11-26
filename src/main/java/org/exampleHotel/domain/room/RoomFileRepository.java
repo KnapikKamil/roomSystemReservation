@@ -32,7 +32,7 @@ public class RoomFileRepository implements RoomRepository {
         return newRoom;
     }
 
-    Room addExistingRoom(int id, int number, List<BedType> bedTypes) {
+    Room addExistingRoom(long id, int number, List<BedType> bedTypes) {
 
 
         Room newRoom = new Room(id, number, bedTypes);
@@ -106,8 +106,8 @@ public class RoomFileRepository implements RoomRepository {
 
     }
 
-    private int findNewId() {
-        int max = 0;
+    private long findNewId() {
+        long max = 0;
         for (Room room : this.rooms) {
             if (room.getId() > max) {
                 max = room.getId();
@@ -117,21 +117,22 @@ public class RoomFileRepository implements RoomRepository {
     }
 
     @Override
-    public void remove(int id) {
-        int guestToBeRemovedIndex = -1;
-        for (int i = 0; i < rooms.size(); i++) {
-            if (this.rooms.get(i).getId() == id) {
-                guestToBeRemovedIndex = i;
+    public void remove(long id) {
+        int roomToBeRemovedIndex = -1;
+        for(int i=0;i<this.rooms.size();i++) {
+            if(this.rooms.get(i).getId() == id) {
+                roomToBeRemovedIndex = i;
                 break;
             }
         }
-        if (guestToBeRemovedIndex > -1) {
-            this.rooms.remove(guestToBeRemovedIndex);
+        if(roomToBeRemovedIndex>-1) {
+            this.rooms.remove(roomToBeRemovedIndex);
         }
     }
 
+
     @Override
-    public void edit(int id, int number, List<BedType> bedTypes) {
+    public void edit(long id, int number, List<BedType> bedTypes) {
         this.remove(id);
         this.addExistingRoom(id, number, bedTypes);
     }

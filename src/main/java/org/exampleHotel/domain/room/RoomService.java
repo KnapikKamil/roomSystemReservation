@@ -62,7 +62,7 @@ public class RoomService {
         this.repository.readAll();
     }
 
-    public void remove(int id) {
+    public void remove(long id) {
         this.repository.remove(id);
     }
 
@@ -99,7 +99,7 @@ public class RoomService {
         return Arrays.asList(bedTypes);
     }
 
-    public void edit(int id, int number, int[] bedTypesOptions) {
+    public void edit(long id, int number, int[] bedTypesOptions) {
         List<BedType> bedTypes = getBedTypes(bedTypesOptions);
         this.repository.edit(id, number, bedTypes);
     }
