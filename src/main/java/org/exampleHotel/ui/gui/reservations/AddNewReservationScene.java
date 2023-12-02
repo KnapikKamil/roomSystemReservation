@@ -51,7 +51,7 @@ gridPane.setVgap(14);
             List<GuestSelectionItem> guestSelectionItems = new ArrayList<>();
 
             this.guestService.getAllAsDTO().forEach( dto -> {
-                guestSelectionItems.add(new GuestSelectionItem(dto.getFirstName(), dto.getLastName(), dto.getId()));
+                guestSelectionItems.add(new GuestSelectionItem(dto.getFirstName(), dto.getLastName(), (int)dto.getId()));
             });
 
             ComboBox<RoomSelectionItem> roomField = new ComboBox<>();

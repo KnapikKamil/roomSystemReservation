@@ -56,7 +56,7 @@ public class Reservation {
 
     private int getGuestId() {
         if (this.guest != null) {
-            return this.guest.getId();
+            return (int)this.guest.getId();
         } else {
             return 0;
         }

@@ -61,6 +61,7 @@ public class SystemUtils {
                 Statement statement = connection.createStatement();
                 statement.execute("CREATE TABLE IF NOT EXISTS ROOMS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_NUMBER INT NOT NULL UNIQUE)");
                 statement.execute("CREATE TABLE IF NOT EXISTS BEDS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_ID INT NOT NULL, BED VARCHAR2(55), FOREIGN KEY (ROOM_ID) REFERENCES ROOMS(ID))");
+                statement.execute("CREATE TABLE IF NOT EXISTS GUESTS(ID INT PRIMARY KEY AUTO_INCREMENT, FIRST_NAME VARCHAR(100) NOT NULL, LAST_NAME VARCHAR(100), AGE INT NOT NULL, GENDER VARCHAR(25))");
                 System.out.println("Udało się nawiązać połączenie z bazą danych");
             } catch (SQLException e) {
                 throw new RuntimeException(e);

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GuestService {
 
-   private final  GuestRepository repository = ObjectPool.getGuestRepository();
+   private final GuestRepository repository = ObjectPool.getGuestRepository();
 
     private final static GuestService instance = new GuestService();
     private GuestService() {
@@ -48,11 +48,11 @@ public class GuestService {
         this.repository.readAll();
     }
 
-    public void remove(int id) {
+    public void remove(long id) {
         this.repository.remove(id);
     }
 
-    public void edit(int id, String firstName, String lastName, int age, int genderOption) {
+    public void edit(long id, String firstName, String lastName, int age, int genderOption) {
         Gender gender;
         switch (genderOption) {
             case 1:
@@ -68,7 +68,7 @@ public class GuestService {
         this.repository.edit(id, firstName, lastName, age, gender);
     }
 
-    public Guest getGuestById(int id) {
+    public Guest getGuestById(long id) {
         return this.repository.findById(id);
 
     }
