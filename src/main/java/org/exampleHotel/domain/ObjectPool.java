@@ -1,9 +1,10 @@
 package org.exampleHotel.domain;
 
 import org.exampleHotel.domain.guest.GuestDatabaseRepository;
-import org.exampleHotel.domain.guest.GuestFileRepository;
 import org.exampleHotel.domain.guest.GuestRepository;
 import org.exampleHotel.domain.guest.GuestService;
+import org.exampleHotel.domain.reservation.ReservationDataBaseRepository;
+import org.exampleHotel.domain.reservation.ReservationFileRepository;
 import org.exampleHotel.domain.reservation.ReservationRepository;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.room.RoomDatabaseRepository;
@@ -38,6 +39,6 @@ public class ObjectPool {
     }
 
     public static ReservationRepository getReservationRepository() {
-        return ReservationRepository.getInstance();
+        return ReservationDataBaseRepository.getInstance();
     }
 }

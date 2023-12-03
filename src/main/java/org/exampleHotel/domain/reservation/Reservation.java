@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 
 public class Reservation {
 
-    private final int id;
+    private final long id;
     private final Room room;
     private final Guest guest;
     private final LocalDateTime from;
     private final LocalDateTime to;
 
-    public Reservation(int id, Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
+    public Reservation(long id, Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
         this.id = id;
         this.room = room;
         this.guest = guest;
@@ -30,7 +30,7 @@ public class Reservation {
         return String.format("%s,%s,%s,%s,%s", this.id, getRoomId(), getGuestId(), this.from.toString(), this.to.toString());
     }
 
-    int getId() {
+    long getId() {
         return this.id;
     }
 
@@ -38,9 +38,9 @@ public class Reservation {
         return new ReservationDTO(this.id, this.from, this.to,getRoomId(), getRoomNumber(), getGuestId(), getGuestName());
     }
 
-    private int getRoomId() {
+    private long getRoomId() {
         if (this.room != null) {
-            return (int) this.room.getId();
+            return  this.room.getId();
         } else {
             return 0;
         }
@@ -54,9 +54,9 @@ public class Reservation {
         }
     }
 
-    private int getGuestId() {
+    private long getGuestId() {
         if (this.guest != null) {
-            return (int)this.guest.getId();
+            return this.guest.getId();
         } else {
             return 0;
         }

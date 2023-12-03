@@ -4,9 +4,9 @@ public class GuestSelectionItem {
 
     private String firstName;
     private String lastName;
-    private int id;
+    private long id;
 
-    public GuestSelectionItem(String firstName, String lastName, int id) {
+    public GuestSelectionItem(String firstName, String lastName, long id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -20,7 +20,7 @@ public class GuestSelectionItem {
         return lastName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
     public String toString(){
