@@ -100,10 +100,15 @@ public class ReservationFileRepository implements ReservationRepository {
         }
     }
 
-    private Reservation addExistingReservation(int id, Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
+    private Reservation addExistingReservation(long id, Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
         Reservation res = new Reservation(id, room, guest, from, to);
         this.reservations.add(res);
         return res;
+    }
+
+    public Reservation edit(long id, Room room, Guest guest, LocalDateTime fromWithTime, LocalDateTime toWithTime) {
+        this.remove(id);
+        return  this.addExistingReservation(id, room, guest, fromWithTime, toWithTime);
     }
 
     @Override
@@ -121,10 +126,7 @@ public class ReservationFileRepository implements ReservationRepository {
     }
 
 
-    public Reservation edit(int id, Room room, Guest guest, LocalDateTime fromWithTime, LocalDateTime toWithTime) {
-        this.remove(id);
-        return  this.addExistingReservation(id, room, guest, fromWithTime, toWithTime);
-    }
+
 
 
 
