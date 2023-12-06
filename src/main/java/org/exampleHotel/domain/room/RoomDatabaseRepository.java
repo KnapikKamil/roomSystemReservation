@@ -17,6 +17,8 @@ public class RoomDatabaseRepository implements RoomRepository{
         return instance;
     }
 
+    private final String createBedTemplate = "INSERT INTO BEDS(ROOM_ID, BED) VALUES(%d, '%s')";
+
     @Override
     public void saveAll() {
 
@@ -80,12 +82,11 @@ public class RoomDatabaseRepository implements RoomRepository{
             statement.execute(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = statement.getGeneratedKeys();
             long newId = -1;
-            while(rs.next()) {
+            while (rs.next()) {
                 newId = rs.getLong(1);
             }
-            String insertBedTemplate = "INSERT INTO BEDS(ROOM_ID, BED) VALUES(%d, '%s')";
-            for(BedType bedType : bedTypes) {
-                statement.execute(String.format(insertBedTemplate, newId, bedType.toString()));
+            for (BedType bedType : bedTypes) {
+                statement.execute(String.format(createBedTemplate, newId, bedType.toString()));
             }
             statement.close();
             Room newRoom = new Room(newId, number, bedTypes);

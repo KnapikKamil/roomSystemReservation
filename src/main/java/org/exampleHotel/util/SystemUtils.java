@@ -15,11 +15,11 @@ public class SystemUtils {
 
     private final Properties prop = new Properties();
 
-    public static final String HOTEL_NAME = "Other ";
+    public static final String HOTEL_NAME = "Random hotel ";
     public static String SYSTEM_VERSION;
     public final static boolean IS_DEVELOPER_VERSION = true;
 
-    public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     public final static int HOTEL_NIGHT_START_HOUR = 14;
     public final static int HOTEL_NIGHT_START_MINUTE = 30;
     public final static int HOTEL_NIGHT_END_HOUR = 12;
@@ -62,6 +62,7 @@ public class SystemUtils {
                 statement.execute("CREATE TABLE IF NOT EXISTS ROOMS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_NUMBER INT NOT NULL UNIQUE)");
                 statement.execute("CREATE TABLE IF NOT EXISTS BEDS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_ID INT NOT NULL, BED VARCHAR2(55), FOREIGN KEY (ROOM_ID) REFERENCES ROOMS(ID))");
                 statement.execute("CREATE TABLE IF NOT EXISTS GUESTS(ID INT PRIMARY KEY AUTO_INCREMENT, FIRST_NAME VARCHAR(100) NOT NULL, LAST_NAME VARCHAR(100), AGE INT NOT NULL, GENDER VARCHAR(25))");
+                statement.execute("CREATE TABLE IF NOT EXISTS RESERVATIONS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_ID INT NOT NULL, GUEST_ID INT NOT NULL, RES_FROM SMALLDATETIME NOT NULL, RES_TO SMALLDATETIME NOT NULL, FOREIGN KEY (ROOM_ID) REFERENCES ROOMS(ID), FOREIGN KEY (GUEST_ID) REFERENCES GUESTS(ID))");
                 System.out.println("Udało się nawiązać połączenie z bazą danych");
             } catch (SQLException e) {
                 throw new RuntimeException(e);

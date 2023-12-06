@@ -11,7 +11,6 @@ import java.util.List;
 public class GuestDatabaseRepository implements GuestRepository {
 
     private final static GuestRepository instance = new GuestDatabaseRepository();
-
     private List<Guest> guests = new ArrayList<>();
 
     public static GuestRepository getInstance() {
@@ -20,11 +19,10 @@ public class GuestDatabaseRepository implements GuestRepository {
 
     @Override
     public Guest createNewGuest(String firstName, String lastName, int age, Gender gender) {
-
         try {
             Statement statement = SystemUtils.connection.createStatement();
             String createGuestTemplate = "INSERT INTO GUESTS(FIRST_NAME, LAST_NAME, AGE, GENDER) VALUES('%s','%s',%d,'%s')";
-            String createGuestQuery = String.format(createGuestTemplate, firstName, lastName, age, gender);
+            String createGuestQuery = String.format(createGuestTemplate, firstName, lastName, age, gender.toString());
             statement.execute(createGuestQuery, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = statement.getGeneratedKeys();
             long newId = -1;
@@ -35,13 +33,10 @@ public class GuestDatabaseRepository implements GuestRepository {
             Guest newGuest = new Guest(newId, firstName, lastName, age, gender);
             this.guests.add(newGuest);
             return newGuest;
-
-
         } catch (SQLException throwables) {
-            System.out.println("Błąd przy tworzeniu gościa");
+            System.out.println("Błąd przy dodawaniu pokoju");
             throw new RuntimeException(throwables);
         }
-
     }
 
     @Override
@@ -51,7 +46,6 @@ public class GuestDatabaseRepository implements GuestRepository {
 
     @Override
     public void saveAll() {
-
     }
 
     @Override
@@ -71,18 +65,15 @@ public class GuestDatabaseRepository implements GuestRepository {
                 } else if (SystemUtils.LGBT.equals(genderAsString)) {
                     gender = Gender.LGBTQ;
 
-                    // błą przy mężczyzna = lgbt, poprawka musi być
                 }
                 Guest newGuest = new Guest(id, firstName, lastName, age, gender);
                 this.guests.add(newGuest);
             }
             statement.close();
         } catch (SQLException throwables) {
-            System.out.println("Błąd przy odczycie gości z bazy danych");
+            System.out.println("Błąd przy wczytywaniu danych");
             throw new RuntimeException(throwables);
         }
-
-
     }
 
     @Override
@@ -95,16 +86,13 @@ public class GuestDatabaseRepository implements GuestRepository {
             statement.close();
             this.removeById(id);
         } catch (SQLException throwables) {
-            System.out.println("Błąd przy usuwaniu z gościa");
+            System.out.println("Błąd przy usuwaniu gościa");
             throw new RuntimeException(throwables);
         }
-
-
     }
 
     @Override
     public void edit(long id, String firstName, String lastName, int age, Gender gender) {
-
         try {
             Statement statement = SystemUtils.connection.createStatement();
             String updateTemplate = "UPDATE GUESTS SET FIRST_NAME='%s', LAST_NAME='%s', AGE=%d, GENDER='%s' WHERE ID=%d";
@@ -114,10 +102,9 @@ public class GuestDatabaseRepository implements GuestRepository {
             this.removeById(id);
             this.guests.add(new Guest(id, firstName, lastName, age, gender));
         } catch (SQLException throwables) {
-            System.out.println("Błąd przy edycji gościa");
+            System.out.println("Błąd przy modyfikacji danych");
             throw new RuntimeException(throwables);
         }
-
     }
 
     public void removeById(long id) {
@@ -135,6 +122,11 @@ public class GuestDatabaseRepository implements GuestRepository {
 
     @Override
     public Guest findById(long id) {
+        for (Guest guest : this.guests) {
+            if (guest.getId() == id) {
+                return guest;
+            }
+        }
         return null;
     }
 }

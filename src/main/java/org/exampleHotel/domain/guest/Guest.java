@@ -48,8 +48,10 @@ public class Guest {
         String gender = "Nie binarna";
         if (this.gender.equals(Gender.FEMALE)){
             gender = "Kobieta";
-        } else if (gender.equals(Gender.MALE)) {
+        } else if (this.gender.equals(Gender.MALE)) {
             gender = "Mężczyzna";
+        } else if (this.gender.equals(Gender.LGBTQ)) {
+            gender = "Nie binarna";
         }
         return new GuestDTO(this.id, this.firstName, this.lastName, this.age, gender);
     }
