@@ -71,9 +71,6 @@ public class AddNewGuestScene {
             this.guestService.createNewGuest(firstName, lastName, age, genderSelection);
 
             guestsTableView.getItems().clear();
-            /* Błąd odczytu, do poprawki
-            Mężczyzna w GUI odczytuje jako nie binarny
-            */
             guestsTableView.getItems().addAll(this.guestService.getAllAsDTO());
             modelStage.close();
         });
