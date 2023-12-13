@@ -76,7 +76,7 @@ public class RoomService {
 
     }
 
-    private static List<BedType> getBedTypes(List<String> bedTypesAsString) {
+    List<BedType> getBedTypes(List<String> bedTypesAsString) {
         BedType[] bedTypes = new BedType[bedTypesAsString.size()];
         for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;

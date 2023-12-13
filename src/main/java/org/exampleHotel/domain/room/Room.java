@@ -15,10 +15,14 @@ public class Room {
         return id;
     }
 
-    Room(long id, int number, List<BedType> bedTypes) {
+    public Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
         this.number = number;
-        this.beds = bedTypes;
+        if (bedTypes==null){
+            this.beds = new ArrayList<>();
+        }else{
+            this.beds = bedTypes;
+        }
     }
 
     public int getNumber() {
@@ -26,7 +30,7 @@ public class Room {
     }
 
     public List<BedType> getBeds() {
-        return beds;
+        return this.beds;
     }
 
     public String getInfo() {
