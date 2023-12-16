@@ -43,5 +43,15 @@ public class GuestTest {
 
         assertEquals(toCSVTemplate, createdCSV, "Porównanie wygenerowanych formatów CSV przy gender == null");
     }
+
+    @Test
+    public void toCSVWithNullNameTest() {
+        Guest guest = new Guest(1, null, null, 25, Gender.MALE);
+
+        String toCSVTemplate = "1,null,null,25,Mężczyzna" + System.getProperty("line.separator");
+        String createdCSV = guest.toCSV();
+
+        assertEquals(toCSVTemplate, createdCSV, "Porównanie wygenerowanych formatów CSV przy imieniu i nazwisku == null");
+    }
 }
 

@@ -8,12 +8,10 @@ import java.util.List;
 public class Room {
 
     private final long id;
-    private final int number;
-    private final List<BedType> beds;
+    private int number;
+    private List<BedType> beds;
 
-    public long getId() {
-        return id;
-    }
+
 
     public Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
@@ -24,14 +22,10 @@ public class Room {
             this.beds = bedTypes;
         }
     }
-
-    public int getNumber() {
-        return number;
+    public long getId() {
+        return id;
     }
 
-    public List<BedType> getBeds() {
-        return this.beds;
-    }
 
     public String getInfo() {
         StringBuilder bedInfo = new StringBuilder("Rodzaje łóżek w pokoju:\n");
@@ -71,7 +65,23 @@ public class Room {
         return new RoomDTO(this.id, this.number, bedTypes, beds.size(), roomSize);
     }
 
-    public void addBed(BedType bedType) {
+    public int getNumber() {
+        return this.number;
+    }
+
+    void addBed(BedType bedType) {
         this.beds.add(bedType);
+    }
+
+    void setNumber(int number) {
+        this.number = number;
+    }
+
+    void setBeds(List<BedType> bedTypes) {
+        this.beds = bedTypes;
+    }
+
+    public List<BedType> getBeds() {
+        return this.beds;
     }
 }
