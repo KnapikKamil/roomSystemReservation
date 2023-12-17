@@ -18,6 +18,10 @@ public class RoomDatabaseRepository implements RoomRepository {
         return instance;
     }
 
+    RoomDatabaseRepository(){
+
+    }
+
 
     @Override
     public void saveAll() {

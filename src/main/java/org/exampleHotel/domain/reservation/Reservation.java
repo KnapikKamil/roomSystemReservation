@@ -38,7 +38,7 @@ public class Reservation {
         return new ReservationDTO(this.id, this.from, this.to,getRoomId(), getRoomNumber(), getGuestId(), getGuestName());
     }
 
-    private long getRoomId() {
+     long getRoomId() {
         if (this.room != null) {
             return  this.room.getId();
         } else {
@@ -46,7 +46,7 @@ public class Reservation {
         }
     }
 
-    private int getRoomNumber() {
+     int getRoomNumber() {
         if (this.room != null) {
             return this.room.getNumber();
         } else {
@@ -54,7 +54,7 @@ public class Reservation {
         }
     }
 
-    private long getGuestId() {
+     long getGuestId() {
         if (this.guest != null) {
             return this.guest.getId();
         } else {
@@ -62,12 +62,20 @@ public class Reservation {
         }
     }
 
-    private String getGuestName() {
+     String getGuestName() {
         if (this.guest != null) {
             return this.guest.getFirstName() + " " + this.guest.getLastName();
         } else {
             return "";
         }
+    }
+
+    public LocalDateTime getFrom() {
+        return this.from;
+    }
+
+    public LocalDateTime getTo() {
+        return this.to;
     }
 
 }
