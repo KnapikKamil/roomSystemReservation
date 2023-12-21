@@ -182,7 +182,7 @@ public class TextUI {
     }
 
     private void showAllReservations(Scanner input) {
-        List<Reservation> reservations = this.reservationService.getAll();
+        List<Reservation> reservations = this.reservationService.getAllReservation();
         for (Reservation reservation : reservations) {
             System.out.println(reservation.getInfo());
 

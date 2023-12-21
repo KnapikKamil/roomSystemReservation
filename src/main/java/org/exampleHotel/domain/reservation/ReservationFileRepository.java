@@ -49,7 +49,7 @@ public class ReservationFileRepository implements ReservationRepository {
     }
 
     @Override
-    public List<Reservation> getAllReservations() {
+    public List<Reservation> getAll() {
         return this.reservations;
     }
 
@@ -66,10 +66,6 @@ public class ReservationFileRepository implements ReservationRepository {
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "write", "reservation data");
         }
-    }
-    @Override
-    public List<Reservation> getAll() {
-        return this.reservations;
     }
 
     @Override

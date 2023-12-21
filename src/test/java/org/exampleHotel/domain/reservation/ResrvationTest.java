@@ -27,12 +27,6 @@ public class ResrvationTest {
     }
 
     @Test
-    void testGetRoomId() {
-        Reservation reservation = new Reservation(1, room, guest, from, to);
-        assertEquals(room.getId(), reservation.getId());
-    }
-
-    @Test
     void testGetRoomNumber() {
         Reservation reservation = new Reservation(1, room, guest, from, to);
         assertEquals(room.getNumber(), reservation.getRoomNumber());

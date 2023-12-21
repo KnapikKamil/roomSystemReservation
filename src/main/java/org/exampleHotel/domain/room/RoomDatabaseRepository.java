@@ -81,7 +81,7 @@ public class RoomDatabaseRepository implements RoomRepository {
 
     @Override
     public List<Room> getAll() {
-        return this.rooms;
+        return new ArrayList<>(this.rooms);
     }
 
     void setConnector(DatabaseRoomConnector connector) {

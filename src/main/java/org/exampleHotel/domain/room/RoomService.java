@@ -1,21 +1,24 @@
 package org.exampleHotel.domain.room;
 
 import org.exampleHotel.domain.ObjectPool;
+import org.exampleHotel.domain.reservation.Reservation;
+import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.room.dto.RoomDTO;
 import org.exampleHotel.exceptions.WrongOptionException;
 import org.exampleHotel.util.SystemUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class RoomService {
 
-    private final RoomRepository repository = ObjectPool.getRoomRepository();
+    private RoomRepository repository = ObjectPool.getRoomRepository();
+    private  ReservationService reservationService = ObjectPool.getReservationService();
 
-    private final static RoomService instance = new RoomService();
 
-    private RoomService() {
+    public RoomService() {
     }
 
     public Room createNewRoom(int number, List<String> bedTypesAsString) {
@@ -52,6 +55,7 @@ public class RoomService {
 
     public List<Room> getAllRooms() {
         return repository.getAll();
+
     }
 
     public void saveAll() {
@@ -114,8 +118,30 @@ public class RoomService {
         return result;
     }
 
-    public static RoomService getInstance() {
-        return instance;
+    public List<Room> getAvailableRooms(LocalDate from, LocalDate to) {
+        if(from == null || to == null) {
+            throw new IllegalArgumentException("Parameters can't be null");
+        }
+
+        if (to.isBefore(from)){
+            throw new IllegalArgumentException("End date can't be before start date");
+        }
+
+        List<Room> rooms = this.repository.getAll();
+        List<Reservation> reservations = reservationService.getAllReservation();
+
+        for (Reservation reservation : reservations){
+
+        }
+
+       return rooms;
+    }
+
+    public void setRepository(RoomRepository roomRepository) {
+        this.repository = roomRepository;
+    }
+
+    public void setResrvationService(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 }
-

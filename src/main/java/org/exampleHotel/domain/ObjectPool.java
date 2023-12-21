@@ -13,6 +13,10 @@ import org.exampleHotel.domain.room.RoomService;
 
 public class ObjectPool {
 
+    private final static RoomService roomService = new RoomService();
+
+    private final static ReservationService reservationService = new ReservationService();
+
     private ObjectPool(){
     }
 
@@ -26,7 +30,7 @@ public class ObjectPool {
 
 
     public static RoomService getRoomService() {
-        return RoomService.getInstance();
+        return roomService;
     }
 
     public static RoomRepository getRoomRepository() {
@@ -35,7 +39,7 @@ public class ObjectPool {
     }
 
     public static ReservationService getReservationService() {
-        return ReservationService.getInstance();
+        return reservationService;
     }
 
     public static ReservationRepository getReservationRepository() {

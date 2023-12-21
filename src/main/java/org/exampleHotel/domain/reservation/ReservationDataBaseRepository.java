@@ -50,18 +50,13 @@ public class ReservationDataBaseRepository implements ReservationRepository {
 
 
     @Override
-    public List<Reservation> getAllReservations() {
-       return null;
+    public List<Reservation> getAll() {
+       return new ArrayList<>(this.reservations);
     }
 
     @Override
     public void saveAll() {
 
-    }
-
-    @Override
-    public List<Reservation> getAll() {
-        return this.reservations;
     }
 
     @Override

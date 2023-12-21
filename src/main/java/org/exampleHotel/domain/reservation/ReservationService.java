@@ -18,14 +18,10 @@ public class ReservationService {
     private final  RoomService roomService = ObjectPool.getRoomService();
     private final GuestService guestService = ObjectPool.getGuestService();
     private final ReservationRepository repository = ObjectPool.getReservationRepository();
-private final static ReservationService instance = new ReservationService();
 
 
-    private  ReservationService(){
+    public   ReservationService(){
 
-    }
-    public static ReservationService getInstance() {
-        return instance;
     }
 
     public Reservation createNewReservation(LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException{
@@ -47,8 +43,8 @@ private final static ReservationService instance = new ReservationService();
         this.repository.readAll();
     }
 
-    public List<Reservation> getAll() {
-        return this.repository.getAllReservations();
+    public List<Reservation> getAllReservation() {
+        return this.repository.getAll();
     }
 
     public void remove(long id) {
