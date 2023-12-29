@@ -39,6 +39,9 @@ gridPane.setVgap(14);
                 DatePicker fromDateField = new DatePicker();
                 DatePicker toDateField = new DatePicker();
 
+
+
+
             List<RoomDTO> allAsDTO = this.roomService.getAllAsDTO();
 
             List<RoomSelectionItem> roomSelectionItems = new ArrayList<>();
@@ -69,6 +72,7 @@ gridPane.setVgap(14);
                try {
                    this.reservationService.createNewReservation(from, to, roomId, guestId);
 
+
                    tableView.getItems().clear();
                    tableView.getItems().addAll(this.reservationService.getAsDTO());
                    modalStage.close();
@@ -78,6 +82,37 @@ gridPane.setVgap(14);
                    errorLabel.setFont(new Font(20));
                    gridPane.add(errorLabel, 0, 5);
                }
+            });
+
+            fromDateField.valueProperty().addListener((ov, oldValue, newValue) -> {
+
+                LocalDate from = newValue;
+                LocalDate to = toDateField.getValue();
+                if(from!=null && to!=null) {
+                    List<RoomDTO> availableRoomsAsDTO = this.roomService.getAvailableRoomsAsDTO(from, to);
+                    roomSelectionItems.clear();
+                    for(RoomDTO dto : availableRoomsAsDTO) {
+                        roomSelectionItems.add(
+                                new RoomSelectionItem(dto.getNumber(), (int)dto.getId()));
+                    }
+                    roomField.getItems().clear();
+                    roomField.getItems().addAll(roomSelectionItems);
+                }
+            });
+
+            toDateField.valueProperty().addListener((ov, oldValue, newValue) -> {
+                LocalDate from = fromDateField.getValue();
+                LocalDate to = newValue;
+                if(from!=null && to!=null) {
+                    List<RoomDTO> availableRoomsAsDTO = this.roomService.getAvailableRoomsAsDTO(from, to);
+                    roomSelectionItems.clear();
+                    for(RoomDTO dto : availableRoomsAsDTO) {
+                        roomSelectionItems.add(
+                                new RoomSelectionItem(dto.getNumber(), (int)dto.getId()));
+                    }
+                    roomField.getItems().clear();
+                    roomField.getItems().addAll(roomSelectionItems);
+                }
             });
 
 

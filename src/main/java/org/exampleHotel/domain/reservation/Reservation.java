@@ -78,4 +78,8 @@ public class Reservation {
         return this.to;
     }
 
+    public Room getRoom() {
+        return this.room;
+    }
+
 }

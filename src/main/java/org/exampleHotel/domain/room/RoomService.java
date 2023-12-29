@@ -8,6 +8,7 @@ import org.exampleHotel.exceptions.WrongOptionException;
 import org.exampleHotel.util.SystemUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,19 +123,42 @@ public class RoomService {
         if(from == null || to == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
-
-        if (to.isBefore(from)){
+        if(to.isBefore(from)) {
             throw new IllegalArgumentException("End date can't be before start date");
         }
-
-        List<Room> rooms = this.repository.getAll();
-        List<Reservation> reservations = reservationService.getAllReservation();
-
-        for (Reservation reservation : reservations){
-
+        List<Room> availableRooms = this.repository.getAll();
+        LocalDateTime fromWithHour = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithHour = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
+        if(this.reservationService==null) {
+            this.reservationService = ObjectPool.getReservationService();
         }
+        List<Reservation> reservations = this.reservationService.getAllReservation();
+        for(Reservation reservation : reservations) {
+            if(reservation.getFrom().isEqual(fromWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if(reservation.getTo().isEqual(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if(reservation.getFrom().isAfter(fromWithHour) &&
+                    reservation.getFrom().isBefore(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if(reservation.getTo().isAfter(fromWithHour) &&
+                    reservation.getTo().isBefore(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if(fromWithHour.isAfter(reservation.getFrom()) &&
+                    toWithHour.isBefore(reservation.getTo())) {
+                availableRooms.remove(reservation.getRoom());
+            }
+        }
+        return availableRooms;
+    }
 
-       return rooms;
+        public List<RoomDTO> getAvailableRoomsAsDTO(LocalDate from, LocalDate to) {
+        List<Room> availableRooms = this.getAvailableRooms(from, to);
+        List<RoomDTO> result = new ArrayList<>();
+        for(Room room : availableRooms) {
+            result.add(room.generateDTO());
+        }
+        return result;
     }
 
     public void setRepository(RoomRepository roomRepository) {

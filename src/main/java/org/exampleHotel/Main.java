@@ -4,6 +4,9 @@ import javafx.application.Application;
 
 import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
+import org.exampleHotel.domain.guest.Gender;
+import org.exampleHotel.domain.guest.Guest;
+import org.exampleHotel.domain.guest.GuestJPARepository;
 import org.exampleHotel.domain.guest.GuestService;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.room.RoomService;
@@ -12,6 +15,7 @@ import org.exampleHotel.ui.gui.PrimaryStage;
 import org.exampleHotel.util.SystemUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -29,6 +33,18 @@ public class Main extends Application {
             SystemUtils.createDataDirectory();
             su.createDataBaseConnection();
             System.out.println("Trwa ładowanie danych..");
+          //  testowanie JPA
+          //  GuestJPARepository guestJPARepository = new GuestJPARepository();
+          //  Guest newGuest = guestJPARepository.createNewGuest("Bonfacy", "Bąkiewicz", 99, Gender.MALE);
+          //  List<Guest> allGuests = guestJPARepository.getAll();
+          //  for (Guest guest : allGuests){
+          //      System.out.println(guest.getInfo());
+          //  }
+//
+          //  guestJPARepository.remove(newGuest.getId());
+//
+          //  guestJPARepository.edit(newGuest.getId(), "Mason", "Moore", 42, Gender.FEMALE);
+
             guestService.readAll();
             roomService.readAll();
             reservationService.readAll();
