@@ -16,7 +16,7 @@ import java.util.List;
 public class RoomService {
 
     private RoomRepository repository = ObjectPool.getRoomRepository();
-    private  ReservationService reservationService = ObjectPool.getReservationService();
+    private ReservationService reservationService = ObjectPool.getReservationService();
 
 
     public RoomService() {
@@ -112,50 +112,59 @@ public class RoomService {
     public List<RoomDTO> getAllAsDTO() {
         List<RoomDTO> result = new ArrayList<>();
         List<Room> allRooms = repository.getAll();
-        for (Room room : allRooms) {
-            RoomDTO roomDTO = room.generateDTO();
-            result.add(roomDTO);
+
+        if (allRooms != null) {
+
+            for (Room room : allRooms) {
+                RoomDTO roomDTO = room.generateDTO();
+                result.add(roomDTO);
+            }
         }
         return result;
     }
 
     public List<Room> getAvailableRooms(LocalDate from, LocalDate to) {
-        if(from == null || to == null) {
+        if (from == null || to == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
-        if(to.isBefore(from)) {
+        if (to.isBefore(from)) {
             throw new IllegalArgumentException("End date can't be before start date");
         }
         List<Room> availableRooms = this.repository.getAll();
         LocalDateTime fromWithHour = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
         LocalDateTime toWithHour = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
-        if(this.reservationService==null) {
+        if (this.reservationService == null) {
             this.reservationService = ObjectPool.getReservationService();
         }
         List<Reservation> reservations = this.reservationService.getAllReservation();
-        for(Reservation reservation : reservations) {
-            if(reservation.getFrom().isEqual(fromWithHour)) {
+
+
+        for (Reservation reservation : reservations) {
+            if (reservation.getFrom().isEqual(fromWithHour)) {
                 availableRooms.remove(reservation.getRoom());
-            } else if(reservation.getTo().isEqual(toWithHour)) {
+            } else if (reservation.getTo().isEqual(toWithHour)) {
                 availableRooms.remove(reservation.getRoom());
-            } else if(reservation.getFrom().isAfter(fromWithHour) &&
+            } else if (reservation.getFrom().isAfter(fromWithHour) &&
                     reservation.getFrom().isBefore(toWithHour)) {
                 availableRooms.remove(reservation.getRoom());
-            } else if(reservation.getTo().isAfter(fromWithHour) &&
+            } else if (reservation.getTo().isAfter(fromWithHour) &&
                     reservation.getTo().isBefore(toWithHour)) {
                 availableRooms.remove(reservation.getRoom());
-            } else if(fromWithHour.isAfter(reservation.getFrom()) &&
+            } else if (fromWithHour.isAfter(reservation.getFrom()) &&
                     toWithHour.isBefore(reservation.getTo())) {
                 availableRooms.remove(reservation.getRoom());
             }
+
         }
+
+
         return availableRooms;
     }
 
-        public List<RoomDTO> getAvailableRoomsAsDTO(LocalDate from, LocalDate to) {
+    public List<RoomDTO> getAvailableRoomsAsDTO(LocalDate from, LocalDate to) {
         List<Room> availableRooms = this.getAvailableRooms(from, to);
         List<RoomDTO> result = new ArrayList<>();
-        for(Room room : availableRooms) {
+        for (Room room : availableRooms) {
             result.add(room.generateDTO());
         }
         return result;

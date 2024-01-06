@@ -1,14 +1,20 @@
 package org.exampleHotel.domain.room;
 
+import jakarta.persistence.*;
 import org.exampleHotel.domain.room.dto.RoomDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Room {
 
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private  long id;
     private int number;
+
+    @ElementCollection(targetClass = BedType.class)
     private List<BedType> beds;
 
 
@@ -22,6 +28,15 @@ public class Room {
             this.beds = bedTypes;
         }
     }
+
+    public Room(int number, List<BedType> beds) {
+        this.number = number;
+        this.beds = beds;
+    }
+
+    public Room() {
+    }
+
     public long getId() {
         return id;
     }
@@ -32,7 +47,7 @@ public class Room {
         for (BedType bed : beds) {
             bedInfo.append("\t").append(bed).append("\n");
         }
-        return String.format("%d Numer: %d %s", this.id, this.number, bedInfo.toString());
+        return String.format("%d Numer: %d %s", this.id, this.number, bedInfo);
     }
 
     String toCSV() {

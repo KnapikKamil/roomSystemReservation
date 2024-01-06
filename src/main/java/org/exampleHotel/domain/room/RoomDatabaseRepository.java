@@ -1,10 +1,5 @@
 package org.exampleHotel.domain.room;
 
-import org.exampleHotel.util.SystemUtils;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

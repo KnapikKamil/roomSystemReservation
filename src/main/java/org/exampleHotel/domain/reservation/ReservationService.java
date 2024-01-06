@@ -15,31 +15,33 @@ import java.util.List;
 
 public class ReservationService {
 
-    private final  RoomService roomService = ObjectPool.getRoomService();
+    private final RoomService roomService = ObjectPool.getRoomService();
     private final GuestService guestService = ObjectPool.getGuestService();
     private final ReservationRepository repository = ObjectPool.getReservationRepository();
 
 
-    public   ReservationService(){
+    public ReservationService() {
 
     }
 
-    public Reservation createNewReservation(LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException{
+    public Reservation createNewReservation(LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException {
         Room room = this.roomService.getRoomById(roomId);
         Guest guest = this.guestService.getGuestById(guestId);
 
         LocalDateTime fromWithTime = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
         LocalDateTime toWithTime = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
-        if (toWithTime.isBefore(fromWithTime)){
+        if (toWithTime.isBefore(fromWithTime)) {
             throw new IllegalArgumentException();
         }
 
         return this.repository.createNewReservation(room, guest, fromWithTime, toWithTime);
     }
+
     public void saveAll() {
         this.repository.saveAll();
     }
-    public void readAll(){
+
+    public void readAll() {
         this.repository.readAll();
     }
 
@@ -51,7 +53,7 @@ public class ReservationService {
         this.repository.remove(id);
     }
 
-    public Reservation edit(int id, LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException{
+    public Reservation edit(int id, LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException {
 
 
         Room room = this.roomService.getRoomById(roomId);
@@ -59,18 +61,22 @@ public class ReservationService {
 
         LocalDateTime fromWithTime = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
         LocalDateTime toWithTime = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
-        if (toWithTime.isBefore(fromWithTime)){
+        if (toWithTime.isBefore(fromWithTime)) {
             throw new IllegalArgumentException();
         }
 
-        return this.repository.edit(id ,room, guest, fromWithTime, toWithTime);
+        return this.repository.edit(id, room, guest, fromWithTime, toWithTime);
     }
-    public List<ReservationDTO> getAsDTO(){
+
+    public List<ReservationDTO> getAsDTO() {
         List<ReservationDTO> result = new ArrayList<>();
         List<Reservation> reservations = repository.getAll();
-        for (Reservation reservation : reservations){
-            ReservationDTO reservationDTO =  reservation.getAsDTO();
-            result.add(reservationDTO);
+
+        if (reservations != null) {
+            for (Reservation reservation : reservations) {
+                ReservationDTO reservationDTO = reservation.getAsDTO();
+                result.add(reservationDTO);
+            }
         }
         return result;
     }

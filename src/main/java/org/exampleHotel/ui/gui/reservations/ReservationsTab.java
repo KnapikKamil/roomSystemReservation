@@ -7,10 +7,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.exampleHotel.domain.ObjectPool;
-import org.exampleHotel.domain.guest.dto.GuestDTO;
 import org.exampleHotel.domain.reservation.ReservationService;
 import org.exampleHotel.domain.reservation.dto.ReservationDTO;
-import org.exampleHotel.ui.gui.reservations.AddNewReservationScene;
 
 import java.time.LocalDateTime;
 

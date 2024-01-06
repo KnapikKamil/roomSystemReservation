@@ -88,7 +88,7 @@ public class ReservationFileRepository implements ReservationRepository {
                 int guestId = Integer.parseInt(reservationData[2]);
                 String fromAsString = reservationData[3];
                 String toAsString = reservationData[4];
-                //TODO handle null guest/room
+
                 addExistingReservation(id, this.roomService.getRoomById(roomId), this.guestService.getGuestById(guestId), LocalDateTime.parse(fromAsString), LocalDateTime.parse(toAsString));
             }
         } catch (IOException e) {
